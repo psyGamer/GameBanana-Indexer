@@ -1,0 +1,36 @@
+name: Update GameBanana index
+
+on:
+  workflow_dispatch:
+  push:
+    branches: '*'
+  schedule:
+    - cron:  '0 0,6,12,18 * * *' # Every 6 hours
+
+permissions:
+  contents: write
+
+jobs:
+  update_index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Store time of start
+        run: echo "START_TIME=$(date -u +%Y-%m-%dT%H:%M:%S%Z)" >> $GITHUB_ENV
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4.7.1
+
+      - name: Run updater
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          python app.py
+
+      - name: Commit result
+        run: |
+          git commit -am "Update GameBanana index at {{ env.START_TIME }}"
+          git push
