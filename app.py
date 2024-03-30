@@ -13,7 +13,7 @@ class File:
     name: str
     url: str
     size: int
-    creation_data: int
+    creation_date: int
     downloads: int
 
 @dataclass
@@ -25,6 +25,7 @@ class ModMetadata:
     category: Category
     total_downloads: int
     files: list[File]
+    screenshots: list[str]
 
 GB_GAME_ID = "19773"
 
@@ -55,9 +56,8 @@ def fetch_all_mods() -> [str]:
     return mod_ids
 
 
-import 
 def fetch_mod_metadata(id: str) -> ModMetadata:
-    url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount"
+    url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
     print(f"Fetching {url}")
     res = requests.get(url)
     if res.status_code != 200:
@@ -70,6 +70,10 @@ def fetch_mod_metadata(id: str) -> ModMetadata:
     for file in json["_aFiles"]:
         files.append(File(file["_sFile"], file["_sDownloadUrl"], file["_nFilesize"], file["_tsDateAdded"], file["_nDownloadCount"]))
 
+    screenshots = []
+    for screenshot in json["_aPreviewMedia"]["_aImages"]:
+        screenshots.append(f"{screenshot['_sBaseUrl']}/{screenshot['_sFile']}")
+
     return ModMetadata(
         id,
         json["_sName"],
@@ -79,7 +83,8 @@ def fetch_mod_metadata(id: str) -> ModMetadata:
             json["_aCategory"]["_idRow"], 
             json["_aCategory"]["_sName"]),
         json["_nDownloadCount"],
-        files)
+        files,
+        screenshots)
 
 class EnhancedJSONEncoder(json.JSONEncoder):
     def default(self, o):
