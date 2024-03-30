@@ -151,6 +151,7 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         return super().default(o)
 
 def main():
+    print("hi main")
     mod_ids = fetch_all_mods()
 
     id_to_index = {}
@@ -166,6 +167,6 @@ def main():
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
 
-
+print("hi")
 if __name__ == "__main__":
     main()
