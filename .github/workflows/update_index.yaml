@@ -35,6 +35,8 @@ jobs:
 
       - name: Commit result
         run: |
-          git add -f gh_index.json
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -f gb_index.json
           git commit -m "Update GameBanana index at {{ env.START_TIME }}"
           git push

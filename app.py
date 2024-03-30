@@ -62,10 +62,10 @@ def fetch_all_mods() -> [str]:
         curr_page += 1
         
         url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
-        print(f"Fetching {url}")
+        print(f"Fetching {url}", flush=True)
         res = requests.get(url)
         if res.status_code != 200:
-            print(f"Failed to fetch! {res.text}")
+            print(f"Failed to fetch! {res.text}", flush=True)
             return mod_ids
 
         json = res.json()
@@ -81,10 +81,10 @@ def fetch_all_mods() -> [str]:
 
 
 def fetch_fuji_meta(file: File) -> FujiMetadata:
-    print(f"Fetching {file.url}")
+    print(f"Fetching {file.url}", flush=True)
     res = requests.get(file.url)
     if res.status_code != 200:
-        print(f"Failed to fetch! {res.text}")
+        print(f"Failed to fetch! {res.text}", flush=True)
         return None
 
     with open("tmp.zip", "wb") as f:
@@ -109,7 +109,7 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
 
 def fetch_mod_metadata(id: int) -> ModMetadata:
     url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
-    print(f"Fetching {url}")
+    print(f"Fetching {url}", flush=True)
     res = requests.get(url)
     if res.status_code != 200:
         print(f"Failed to fetch! {res.text}")
@@ -151,7 +151,6 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         return super().default(o)
 
 def main():
-    print("hi main")
     mod_ids = fetch_all_mods()
 
     id_to_index = {}
@@ -162,11 +161,10 @@ def main():
             mod_metas.append(fetch_mod_metadata(id))
             id_to_index[id] = i
         except Exception as ex:
-            print(f"Failed fetching metadata: {ex}")
+            print(f"Failed fetching metadata: {ex}", flush=True)
     
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
 
-print("hi")
 if __name__ == "__main__":
     main()
