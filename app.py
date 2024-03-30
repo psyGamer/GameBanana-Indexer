@@ -98,33 +98,15 @@ def fetch_all_mods() -> [str]:
 
 def fetch_fuji_meta(file: File) -> FujiMetadata:
     retries = 1
-
+    res = None
+    
     while True:
         try:
             print(f"Fetching {file.url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
             res = requests.get(file.url)
             if res.status_code != 200:
                 raise Exception(res.text)
-        
-            with open("tmp.zip", "wb") as f:
-                f.write(res.content)
-        
-            with zipfile.ZipFile("tmp.zip", 'r') as zip:
-                for entry in zip.filelist:
-                    if "fuji.json" in entry.filename.lower():
-                        with zip.open(entry, 'r') as fuji_json_file:
-                            fuji_meta = json.load(fuji_json_file)
-                            return FujiMetadata(
-                                fuji_meta.get("Id", None),
-                                fuji_meta.get("Name", None),
-                                fuji_meta.get("Version", None),
-                                fuji_meta.get("ModAuthor", None),
-                                fuji_meta.get("Description", None),
-                                fuji_meta.get("Icon", None),
-                                fuji_meta.get("FujiRequiredVersion", None),
-                                fuji_meta.get("Dependencies", {}),
-                                fuji_meta.get("AssetReplacements", {}))
-            return None
+            break
         except Exception as ex:
             print(f"Failed to fetch! {ex}", flush=True)
             retries += 1
@@ -132,6 +114,27 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
                 print("Aborting fetch!")
                 return None
             time.sleep(RETRY_TIMEOUT_S)
+
+    with open("tmp.zip", "wb") as f:
+        f.write(res.content)
+    
+    with zipfile.ZipFile("tmp.zip", 'r') as zip:
+        for entry in zip.filelist:
+            if "fuji.json" in entry.filename.lower():
+                with zip.open(entry, 'r') as fuji_json_file:
+                    fuji_meta = json.load(fuji_json_file)
+                    return FujiMetadata(
+                        fuji_meta.get("Id", None),
+                        fuji_meta.get("Name", None),
+                        fuji_meta.get("Version", None),
+                        fuji_meta.get("ModAuthor", None),
+                        fuji_meta.get("Description", None),
+                        fuji_meta.get("Icon", None),
+                        fuji_meta.get("FujiRequiredVersion", None),
+                        fuji_meta.get("Dependencies", {}),
+                        fuji_meta.get("AssetReplacements", {}))
+    return None
+
                  
         
 def fetch_mod_metadata(id: int) -> ModMetadata:
