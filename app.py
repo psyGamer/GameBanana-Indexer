@@ -124,7 +124,6 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
                                 fuji_meta.get("FujiRequiredVersion", None),
                                 fuji_meta.get("Dependencies", {}),
                                 fuji_meta.get("AssetReplacements", {}))
-            print("Fuji.json not found!", flush=True)
             return None
         except Exception as ex:
             print(f"Failed to fetch! {ex}", flush=True)
@@ -167,6 +166,8 @@ def fetch_mod_metadata(id: int) -> ModMetadata:
 
     
     fuji_meta = fetch_fuji_meta(files[0])
+    if fuji_meta is None:
+        raise Exception("Fuji.json not found")
 
     return ModMetadata(
         id,
@@ -206,6 +207,8 @@ def main():
     
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
+    with open("gb_index.min.json", "w") as f:
+        json.dump(GamebananaIndex(id_to_index, mod_metas), f, cls=EnhancedJSONEncoder)
 
 if __name__ == "__main__":
     main()
