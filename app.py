@@ -208,7 +208,7 @@ def main():
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
-        json.dump(GamebananaIndex(id_to_index, mod_metas), f, cls=EnhancedJSONEncoder)
+        json.dump(GamebananaIndex(id_to_index, mod_metas), f, separators=(',', ':'), cls=EnhancedJSONEncoder)
 
 if __name__ == "__main__":
     main()
