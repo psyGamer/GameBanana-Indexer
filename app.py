@@ -3,6 +3,7 @@ import json
 import zipfile
 import dataclasses
 import traceback
+import time
 from dataclasses import dataclass
 from typing import Optional
 
@@ -53,6 +54,9 @@ class GamebananaIndex:
 
 GB_GAME_ID = "19773"
 
+MAX_RETRY_ATTEMPTS = 5
+RETRY_TIMEOUT_S = 5
+
 def fetch_all_mods() -> [str]:
     mod_ids = []
     
@@ -60,15 +64,27 @@ def fetch_all_mods() -> [str]:
     curr_page = 0
     while True:
         curr_page += 1
-        
-        url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
-        print(f"Fetching {url}", flush=True)
-        res = requests.get(url)
-        if res.status_code != 200:
-            print(f"Failed to fetch! {res.text}", flush=True)
-            return mod_ids
 
-        json = res.json()
+        retries = 1
+
+        json = None
+        
+        while True:
+            try:
+                url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
+                print(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
+                res = requests.get(url)
+                if res.status_code != 200:
+                    raise Exception(res.text)
+                json = res.json()
+                break
+            except Exception as ex:
+                print(f"Failed to fetch! {ex}", flush=True)
+                retries += 1
+                if retries > MAX_RETRY_ATTEMPTS:
+                    print("Aborting update!")
+                    exit(-1)
+                time.sleep(RETRY_TIMEOUT_S)
               
         for mod in json["_aRecords"]:
             mod_ids.append(mod["_idRow"])
@@ -81,42 +97,64 @@ def fetch_all_mods() -> [str]:
 
 
 def fetch_fuji_meta(file: File) -> FujiMetadata:
-    print(f"Fetching {file.url}", flush=True)
-    res = requests.get(file.url)
-    if res.status_code != 200:
-        print(f"Failed to fetch! {res.text}", flush=True)
-        return None
+    retries = 1
 
-    with open("tmp.zip", "wb") as f:
-        f.write(res.content)
-
-    with zipfile.ZipFile("tmp.zip", 'r') as zip:
-        for entry in zip.filelist:
-            if "fuji.json" in entry.filename.lower():
-                with zip.open(entry, 'r') as fuji_json_file:
-                    fuji_meta = json.load(fuji_json_file)
-                    return FujiMetadata(
-                        fuji_meta.get("Id", None),
-                        fuji_meta.get("Name", None),
-                        fuji_meta.get("Version", None),
-                        fuji_meta.get("ModAuthor", None),
-                        fuji_meta.get("Description", None),
-                        fuji_meta.get("Icon", None),
-                        fuji_meta.get("FujiRequiredVersion", None),
-                        fuji_meta.get("Dependencies", {}),
-                        fuji_meta.get("AssetReplacements", {}))
-
-
+    while True:
+        try:
+            print(f"Fetching {file.url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
+            res = requests.get(file.url)
+            if res.status_code != 200:
+                raise Exception(res.text)
+        
+            with open("tmp.zip", "wb") as f:
+                f.write(res.content)
+        
+            with zipfile.ZipFile("tmp.zip", 'r') as zip:
+                for entry in zip.filelist:
+                    if "fuji.json" in entry.filename.lower():
+                        with zip.open(entry, 'r') as fuji_json_file:
+                            fuji_meta = json.load(fuji_json_file)
+                            return FujiMetadata(
+                                fuji_meta.get("Id", None),
+                                fuji_meta.get("Name", None),
+                                fuji_meta.get("Version", None),
+                                fuji_meta.get("ModAuthor", None),
+                                fuji_meta.get("Description", None),
+                                fuji_meta.get("Icon", None),
+                                fuji_meta.get("FujiRequiredVersion", None),
+                                fuji_meta.get("Dependencies", {}),
+                                fuji_meta.get("AssetReplacements", {}))
+        except Exception as ex:
+            print(f"Failed to fetch! {ex}", flush=True)
+            retries += 1
+            if retries > MAX_RETRY_ATTEMPTS:
+                print("Aborting fetch!")
+                return None
+            time.sleep(RETRY_TIMEOUT_S)
+                 
+        
 def fetch_mod_metadata(id: int) -> ModMetadata:
-    url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
-    print(f"Fetching {url}", flush=True)
-    res = requests.get(url)
-    if res.status_code != 200:
-        print(f"Failed to fetch! {res.text}")
-        return None
+    retries = 1
 
-    json = res.json()
-
+    json = None
+        
+    while True:
+        try:
+            url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
+            print(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
+            res = requests.get(url)
+            if res.status_code != 200:
+                raise Exception(res.text)
+            json = res.json()
+            break
+        except Exception as ex:
+            print(f"Failed to fetch! {ex}", flush=True)
+            retries += 1
+            if retries > MAX_RETRY_ATTEMPTS:
+                print("Aborting fetch!")
+                return None
+            time.sleep(RETRY_TIMEOUT_S)
+    
     files = []
     for file in json["_aFiles"]:
         files.append(File(file["_sFile"], file["_sDownloadUrl"], file["_nFilesize"], file["_tsDateAdded"], file["_nDownloadCount"]))
@@ -125,6 +163,7 @@ def fetch_mod_metadata(id: int) -> ModMetadata:
     for screenshot in json["_aPreviewMedia"]["_aImages"]:
         screenshots.append(f"{screenshot['_sBaseUrl']}/{screenshot['_sFile']}")
 
+    
     fuji_meta = fetch_fuji_meta(files[0])
 
     return ModMetadata(
