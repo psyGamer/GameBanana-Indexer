@@ -1,4 +1,5 @@
 import requests
+import json
 from dataclasses import dataclass
 
 @dataclass
@@ -60,10 +61,18 @@ def fetch_mod_metadata(id: str) -> ModMetadata:
 
     return ModMetadata(id, json[0], json[1], json[2], Category(json[3], json[4]), json[5], files)
 
+class EnhancedJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if dataclasses.is_dataclass(o):
+            return dataclasses.asdict(o)
+        return super().default(o)
+
 def main():
     mod_ids = fetch_all_mods()
     mod_metas = [fetch_mod_metadata(id) for id in mod_ids]
-    print(mod_metas)
+
+    with open("gb_index.json", "w") as f:
+        json.dump(mod_metas, f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
 
 if __name__ == "__main__":
     main()
