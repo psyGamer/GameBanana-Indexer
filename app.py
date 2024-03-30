@@ -1,5 +1,6 @@
 import requests
 import json
+import dataclasses
 from dataclasses import dataclass
 
 @dataclass
@@ -31,35 +32,54 @@ def fetch_all_mods() -> [str]:
     mod_ids = []
     
     # We need to index all pages until no more mods are returned
-    curr_page = 1
+    curr_page = 0
     while True:
-        url = f"https://api.gamebanana.com/Core/List/New?page={curr_page}&gameid={GB_GAME_ID}&itemtype=Mod"
+        curr_page += 1
+        
+        url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
         print(f"Fetching {url}")
         res = requests.get(url)
-        json = res.json()
-        curr_page += 1
+        if res.status_code != 200:
+            print(f"Failed to fetch! {res.text}")
+            return mod_ids
 
-        if len(json) == 0:
-            break
-    
-        for type, id in json:
-            mod_ids.append(id)
+        json = res.json()
+              
+        for mod in json["_aRecords"]:
+            mod_ids.append(mod["_idRow"])
+
+        if json["_aMetadata"]["_bIsComplete"]:
+            return mod_ids
+
 
     return mod_ids
 
 
+import 
 def fetch_mod_metadata(id: str) -> ModMetadata:
-    url = f"https://api.gamebanana.com/Core/Item/Data?itemid={id}&fields=name,description,Owner().name,catid,Category().name,downloads,Files().aFiles()&itemtype=Mod"
+    url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount"
     print(f"Fetching {url}")
     res = requests.get(url)
+    if res.status_code != 200:
+        print(f"Failed to fetch! {res.text}")
+        return None
+
     json = res.json()
 
     files = []
-    for file_id in json[6]:
-        file = json[6][file_id]
+    for file in json["_aFiles"]:
         files.append(File(file["_sFile"], file["_sDownloadUrl"], file["_nFilesize"], file["_tsDateAdded"], file["_nDownloadCount"]))
 
-    return ModMetadata(id, json[0], json[1], json[2], Category(json[3], json[4]), json[5], files)
+    return ModMetadata(
+        id,
+        json["_sName"],
+        json["_sDescription"],
+        json["_aSubmitter"]["_sName"],
+        Category(
+            json["_aCategory"]["_idRow"], 
+            json["_aCategory"]["_sName"]),
+        json["_nDownloadCount"],
+        files)
 
 class EnhancedJSONEncoder(json.JSONEncoder):
     def default(self, o):
