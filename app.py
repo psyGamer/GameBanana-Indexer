@@ -124,6 +124,8 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
                                 fuji_meta.get("FujiRequiredVersion", None),
                                 fuji_meta.get("Dependencies", {}),
                                 fuji_meta.get("AssetReplacements", {}))
+            print("Fuji.json not found!", flush=True)
+            return None
         except Exception as ex:
             print(f"Failed to fetch! {ex}", flush=True)
             retries += 1
