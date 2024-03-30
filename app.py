@@ -1,7 +1,10 @@
 import requests
 import json
+import zipfile
 import dataclasses
+import traceback
 from dataclasses import dataclass
+from typing import Optional
 
 @dataclass
 class Category:
@@ -18,14 +21,35 @@ class File:
 
 @dataclass
 class ModMetadata:
-    id: str
+    gamebanana_id: int
+    mod_id: str
     name: str
     desc: str
+    version: str
+    fuji_required_version: str
+    dependencies: dict[str,str]
     author: str
     category: Category
     total_downloads: int
     files: list[File]
     screenshots: list[str]
+
+@dataclass
+class FujiMetadata:
+    id: str
+    name: str
+    version: str
+    author: str
+    description: str
+    icon: str
+    fuji_required_version: str
+    dependencies: dict[str,str]
+    asset_replacements: dict[str,str]
+
+@dataclass
+class GamebananaIndex:
+    id_to_index: dict[int,int]
+    mod_metas: [ModMetadata]
 
 GB_GAME_ID = "19773"
 
@@ -56,7 +80,34 @@ def fetch_all_mods() -> [str]:
     return mod_ids
 
 
-def fetch_mod_metadata(id: str) -> ModMetadata:
+def fetch_fuji_meta(file: File) -> FujiMetadata:
+    print(f"Fetching {file.url}")
+    res = requests.get(file.url)
+    if res.status_code != 200:
+        print(f"Failed to fetch! {res.text}")
+        return None
+
+    with open("tmp.zip", "wb") as f:
+        f.write(res.content)
+
+    with zipfile.ZipFile("tmp.zip", 'r') as zip:
+        for entry in zip.filelist:
+            if "fuji.json" in entry.filename.lower():
+                with zip.open(entry, 'r') as fuji_json_file:
+                    fuji_meta = json.load(fuji_json_file)
+                    return FujiMetadata(
+                        fuji_meta.get("Id", None),
+                        fuji_meta.get("Name", None),
+                        fuji_meta.get("Version", None),
+                        fuji_meta.get("ModAuthor", None),
+                        fuji_meta.get("Description", None),
+                        fuji_meta.get("Icon", None),
+                        fuji_meta.get("FujiRequiredVersion", None),
+                        fuji_meta.get("Dependencies", {}),
+                        fuji_meta.get("AssetReplacements", {}))
+
+
+def fetch_mod_metadata(id: int) -> ModMetadata:
     url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
     print(f"Fetching {url}")
     res = requests.get(url)
@@ -74,10 +125,16 @@ def fetch_mod_metadata(id: str) -> ModMetadata:
     for screenshot in json["_aPreviewMedia"]["_aImages"]:
         screenshots.append(f"{screenshot['_sBaseUrl']}/{screenshot['_sFile']}")
 
+    fuji_meta = fetch_fuji_meta(files[0])
+
     return ModMetadata(
         id,
+        fuji_meta.id,
         json["_sName"],
         json["_sDescription"],
+        fuji_meta.version,
+        fuji_meta.fuji_required_version,
+        fuji_meta.dependencies,
         json["_aSubmitter"]["_sName"],
         Category(
             json["_aCategory"]["_idRow"], 
@@ -86,6 +143,7 @@ def fetch_mod_metadata(id: str) -> ModMetadata:
         files,
         screenshots)
 
+  
 class EnhancedJSONEncoder(json.JSONEncoder):
     def default(self, o):
         if dataclasses.is_dataclass(o):
@@ -94,10 +152,20 @@ class EnhancedJSONEncoder(json.JSONEncoder):
 
 def main():
     mod_ids = fetch_all_mods()
-    mod_metas = [fetch_mod_metadata(id) for id in mod_ids]
 
+    id_to_index = {}
+    mod_metas = []
+
+    for i, id in enumerate(mod_ids):
+        try:
+            mod_metas.append(fetch_mod_metadata(id))
+            id_to_index[id] = i
+        except Exception as ex:
+            print(f"Failed fetching metadata: {ex}")
+    
     with open("gb_index.json", "w") as f:
-        json.dump(mod_metas, f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
+        json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
+
 
 if __name__ == "__main__":
     main()
