@@ -31,6 +31,7 @@ class ModMetadata:
     dependencies: dict[str,str]
     author: str
     category: Category
+    modify_date: int
     total_downloads: int
     files: list[File]
     screenshots: list[str]
@@ -47,6 +48,7 @@ class ModMetadata:
             json_data["dependencies"],
             json_data["author"],
             Category(**json_data["category"]),
+            json_data["modify_date"],
             json_data["total_downloads"],
             [File(**file) for file in json_data["files"]],
             json_data["screenshots"]
@@ -65,6 +67,11 @@ class FujiMetadata:
     asset_replacements: dict[str,str]
 
 @dataclass
+class ModIndexData:
+    id: int
+    modify_date: int
+
+@dataclass
 class GamebananaIndex:
     id_to_index: dict[int,int]
     mod_metas: [ModMetadata]
@@ -81,8 +88,8 @@ GB_GAME_ID = "19773"
 MAX_RETRY_ATTEMPTS = 5
 RETRY_TIMEOUT_S = 5
 
-def fetch_all_mods() -> [str]:
-    mod_ids = []
+def fetch_all_mods() -> list[ModIndexData]:
+    mod_indices = []
     
     # We need to index all pages until no more mods are returned
     curr_page = 0
@@ -111,14 +118,10 @@ def fetch_all_mods() -> [str]:
                 time.sleep(RETRY_TIMEOUT_S)
               
         for mod in json["_aRecords"]:
-            mod_ids.append(mod["_idRow"])
+            mod_indices.append(ModIndexData(mod["_idRow"], mod["_tsDateModified"]))
 
         if json["_aMetadata"]["_bIsComplete"]:
-            return mod_ids
-
-
-    return mod_ids
-
+            return mod_indices
 
 def fetch_fuji_meta(file: File) -> FujiMetadata:
     retries = 1
@@ -248,20 +251,27 @@ def main():
     except Exception:
         print("Cached previous index not found")
     
-    mod_ids = fetch_all_mods()
+    mod_indices = fetch_all_mods()
 
     id_to_index = {}
     mod_metas = []
 
     i = 0
-    for id in mod_ids:
-        try:
-            old_meta: Optional[ModMetadata] = None
-            if old_index is not None and f"{id}" in old_index.id_to_index:
-                old_meta = old_index.mod_metas[old_index.id_to_index[f"{id}"]]
-            
-            mod_metas.append(fetch_mod_metadata(old_meta, id))
+    for idx in mod_indices:
+        old_meta: Optional[ModMetadata] = None
+        if old_index is not None and f"{idx.id}" in old_index.id_to_index:
+            old_meta = old_index.mod_metas[old_index.id_to_index[f"{idx.id}"]]
+
+        # Skip fetching metadata if mod wasn't modified
+        if old_meta is not None and idx.modify_date == old_meta.modify_date:
+            print(f"Skipping {idx.id}")
+            mod_metas.append(old_meta)
             id_to_index[id] = i
+            i += 1
+        
+        try:
+            mod_metas.append(fetch_mod_metadata(old_meta, idx.id))
+            id_to_index[idx.id] = i
             i += 1
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
