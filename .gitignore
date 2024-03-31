@@ -1,3 +1,4 @@
 .venv
 gb_index.json
+gb_index.min.json
 tmp.zip

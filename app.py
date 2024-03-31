@@ -35,6 +35,23 @@ class ModMetadata:
     files: list[File]
     screenshots: list[str]
 
+    @classmethod
+    def from_json(cls, json_data):
+        return ModMetadata(
+            json_data["gamebanana_id"],
+            json_data["mod_id"],
+            json_data["name"],
+            json_data["desc"],
+            json_data["version"],
+            json_data["fuji_required_version"],
+            json_data["dependencies"],
+            json_data["author"],
+            Category(**json_data["category"]),
+            json_data["total_downloads"],
+            [File(**file) for file in json_data["files"]],
+            json_data["screenshots"]
+        )
+
 @dataclass
 class FujiMetadata:
     id: str
@@ -51,6 +68,13 @@ class FujiMetadata:
 class GamebananaIndex:
     id_to_index: dict[int,int]
     mod_metas: [ModMetadata]
+
+    @classmethod
+    def from_json(cls, json_data):
+        return GamebananaIndex(
+            json_data["id_to_index"],
+            [ModMetadata.from_json(meta) for meta in json_data["mod_metas"]]
+        )
 
 GB_GAME_ID = "19773"
 
@@ -105,7 +129,7 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
             print(f"Fetching {file.url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
             res = requests.get(file.url)
             if res.status_code != 200:
-                raise Exception(res.text)
+                    raise Exception(res.text)
             break
         except Exception as ex:
             print(f"Failed to fetch! {ex}", flush=True)
@@ -137,7 +161,7 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
 
                  
         
-def fetch_mod_metadata(id: int) -> ModMetadata:
+def fetch_mod_metadata(old_meta: Optional[ModMetadata], id: int) -> ModMetadata:
     retries = 1
 
     json = None
@@ -167,6 +191,25 @@ def fetch_mod_metadata(id: int) -> ModMetadata:
     for screenshot in json["_aPreviewMedia"]["_aImages"]:
         screenshots.append(f"{screenshot['_sBaseUrl']}/{screenshot['_sFile']}")
 
+    # Re-use previous data if latest file hasn't changed
+    if old_meta is not None and old_meta.files[0].creation_date == files[0].creation_date:
+        print(f"Skipping {files[0].url}", flush=True)
+        return ModMetadata(
+            id,
+            old_meta.mod_id,
+            json["_sName"],
+            json["_sDescription"],
+            old_meta.version,
+            old_meta.fuji_required_version,
+            old_meta.dependencies,
+            json["_aSubmitter"]["_sName"],
+            Category(
+                json["_aCategory"]["_idRow"], 
+                json["_aCategory"]["_sName"]),
+            json["_nDownloadCount"],
+            files,
+            screenshots
+        )
     
     fuji_meta = fetch_fuji_meta(files[0])
     if fuji_meta is None:
@@ -186,7 +229,8 @@ def fetch_mod_metadata(id: int) -> ModMetadata:
             json["_aCategory"]["_sName"]),
         json["_nDownloadCount"],
         files,
-        screenshots)
+        screenshots
+    )
 
   
 class EnhancedJSONEncoder(json.JSONEncoder):
@@ -196,15 +240,29 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         return super().default(o)
 
 def main():
+
+    old_index: Optional[GamebananaIndex] = None
+    try:
+        with open("gb_index.json", "r") as f:
+            old_index = GamebananaIndex.from_json(json.load(f))
+    except Exception:
+        print("Cached previous index not found")
+    
     mod_ids = fetch_all_mods()
 
     id_to_index = {}
     mod_metas = []
 
-    for i, id in enumerate(mod_ids):
+    i = 0
+    for id in mod_ids:
         try:
-            mod_metas.append(fetch_mod_metadata(id))
+            old_meta: Optional[ModMetadata] = None
+            if old_index is not None and f"{id}" in old_index.id_to_index:
+                old_meta = old_index.mod_metas[old_index.id_to_index[f"{id}"]]
+            
+            mod_metas.append(fetch_mod_metadata(old_meta, id))
             id_to_index[id] = i
+            i += 1
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
     
