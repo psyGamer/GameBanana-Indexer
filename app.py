@@ -171,7 +171,7 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], id: int) -> ModMetadata:
         
     while True:
         try:
-            url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia"
+            url = f"https://gamebanana.com/apiv11/Mod/{id}?_csvProperties=_sName,_sDescription,_sDownloadUrl,_aFiles,_aSubmitter,_aCategory,_nDownloadCount,_aPreviewMedia,_tsDateModified"
             print(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", flush=True)
             res = requests.get(url)
             if res.status_code != 200:
@@ -209,6 +209,7 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], id: int) -> ModMetadata:
             Category(
                 json["_aCategory"]["_idRow"], 
                 json["_aCategory"]["_sName"]),
+            json["_tsDateModified"],
             json["_nDownloadCount"],
             files,
             screenshots
@@ -230,6 +231,7 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], id: int) -> ModMetadata:
         Category(
             json["_aCategory"]["_idRow"], 
             json["_aCategory"]["_sName"]),
+            json["_tsDateModified"],
         json["_nDownloadCount"],
         files,
         screenshots
