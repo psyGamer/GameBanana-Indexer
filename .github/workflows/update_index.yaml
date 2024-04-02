@@ -38,5 +38,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -f gb_index.json gb_index.min.json
-          git commit -m "Update GameBanana index at ${{ env.START_TIME }}" --allow-empty
+          git commit -m "Update GameBanana index at ${{ env.START_TIME }}" || true
           git push
