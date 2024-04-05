@@ -31,7 +31,9 @@ jobs:
 
       
       - name: Run index updater
-        run: python app.py
+        run: |
+          source .venv/bin/activate
+          python app.py
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
