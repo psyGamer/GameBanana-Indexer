@@ -79,12 +79,21 @@ class GamebananaIndex:
     id_to_index: dict[int,int]
     mod_metas: list[ModMetadata]
 
+    # Only needed for caching
+    _invalid_mods: list[ModIndexData]
+
     @classmethod
     def from_json(cls, json_data):
         return GamebananaIndex(
             json_data["id_to_index"],
-            [ModMetadata.from_json(meta) for meta in json_data["mod_metas"]]
+            [ModMetadata.from_json(meta) for meta in json_data["mod_metas"]],
+            [ModIndexData(**idx) for idx in json_data["_invalid_mods"]]
         )
+
+@dataclass
+class GamebananaIndexMinified:
+    id_to_index: dict[int,int]
+    mod_metas: list[ModMetadata]
 
 GB_GAME_ID = "19773"
 
@@ -255,11 +264,13 @@ def main():
             old_index = GamebananaIndex.from_json(json.load(f))
     except Exception:
         print("Cached previous index not found")
+        print(traceback.format_exc())
     
     mod_indices = fetch_all_mods()
 
     id_to_index = {}
     mod_metas = []
+    invalid_mods = []
 
     i = 0
     for idx in mod_indices:
@@ -274,6 +285,16 @@ def main():
             id_to_index[idx.id] = i
             i += 1
             continue
+
+        old_invalid: Optional[ModIndexData] = None
+        if old_index is not None:
+            old_invalid = next((x for x in old_index._invalid_mods if x.id == idx.id), None)
+
+        # Skip fetching metadata if mod was invalid and still is
+        if old_invalid is not None and idx.modify_date == old_invalid.modify_date:
+            print(f"Still invalid {idx.id}")
+            invalid_mods.append(old_invalid)
+            continue
         
         try:
             mod_metas.append(fetch_mod_metadata(old_meta, idx))
@@ -282,11 +303,12 @@ def main():
             pass
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
+            invalid_mods.append(idx)
 
     with open("gb_index.json", "w") as f:
-        json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
+        json.dump(GamebananaIndex(id_to_index, mod_metas, invalid_mods), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
-        json.dump(GamebananaIndex(id_to_index, mod_metas), f, separators=(',', ':'), cls=EnhancedJSONEncoder)
+        json.dump(GamebananaIndexMinified(id_to_index, mod_metas), f, separators=(',', ':'), cls=EnhancedJSONEncoder)
 
 if __name__ == "__main__":
     main()
