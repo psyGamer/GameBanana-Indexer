@@ -4,8 +4,10 @@ import zipfile
 import dataclasses
 import traceback
 import time
+import os
 from dataclasses import dataclass
 from typing import Optional
+from discord_webhook import DiscordWebhook, DiscordEmbed
 
 @dataclass
 class Category:
@@ -94,6 +96,22 @@ class GamebananaIndex:
 class GamebananaIndexMinified:
     id_to_index: dict[int,int]
     mod_metas: list[ModMetadata]
+
+@dataclass
+class IndexUpdateStatus:
+    updated: list[str]
+    skipped: list[str]
+    invalid: list[str]
+
+GITHUB_RUN_ID = os.getenv("GITHUB_RUN_ID")
+GITHUB_RUN_URL = f"https://github.com/psyGamer/GameBanana-Indexer/actions/runs/{GITHUB_RUN_ID}" # TODO: Change URL once in Fuji org!
+
+WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
+WEBHOOK_VERBOSE_THEAD_ID = "1225924082990841877"
+WEBHOOK_COLOR_ERROR = "bb1717"
+WEBHOOK_COLOR_SUCCESS = "89f556"
+webhook = DiscordWebhook(url=WEBHOOK_URL)
+webhook_verbose = DiscordWebhook(url=WEBHOOK_URL, thread_id=WEBHOOK_VERBOSE_THEAD_ID)
 
 GB_GAME_ID = "19773"
 
@@ -272,6 +290,8 @@ def main():
     mod_metas = []
     invalid_mods = []
 
+    update_status = IndexUpdateStatus([], [], [])
+
     i = 0
     for idx in mod_indices:
         old_meta: Optional[ModMetadata] = None
@@ -284,6 +304,7 @@ def main():
             mod_metas.append(old_meta)
             id_to_index[idx.id] = i
             i += 1
+            update_status.skipped.append(idx.name)
             continue
 
         old_invalid: Optional[ModIndexData] = None
@@ -294,21 +315,41 @@ def main():
         if old_invalid is not None and idx.modify_date == old_invalid.modify_date:
             print(f"Still invalid {idx.id}")
             invalid_mods.append(old_invalid)
+            update_status.invalid.append(idx.name)
             continue
         
         try:
             mod_metas.append(fetch_mod_metadata(old_meta, idx))
             id_to_index[idx.id] = i
             i += 1
+            update_status.updated.append(idx.name)
             pass
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
             invalid_mods.append(idx)
+            update_status.invalid.append(idx.name)
 
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas, invalid_mods), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
         json.dump(GamebananaIndexMinified(id_to_index, mod_metas), f, separators=(',', ':'), cls=EnhancedJSONEncoder)
 
+    embed = DiscordEmbed(title=f"Index Updated", url=GITHUB_RUN_URL, color=WEBHOOK_COLOR_SUCCESS)
+    embed.set_timestamp()
+    embed.add_embed_field(name="Updated", value="\n".join(update_status.updated), inline=True)
+    embed.add_embed_field(name="Unchanged", value="\n".join(update_status.skipped), inline=True)
+    embed.add_embed_field(name="Invalid", value="\n".join(update_status.invalid), inline=True)
+    webhook_verbose.add_embed(embed)
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as ex:
+        print(ex)
+        print(traceback.format_exc())
+        embed = DiscordEmbed(title=f"Indexer Failure: {ex}", description=traceback.format_exc(), url=GITHUB_RUN_URL, color=WEBHOOK_COLOR_ERROR)
+        embed.set_timestamp()
+        webhook_verbose.add_embed(embed)
+    finally:
+        response = webhook_verbose.execute()
+    
