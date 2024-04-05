@@ -200,7 +200,7 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
     if old_meta is not None and old_meta.files[0].creation_date == files[0].creation_date:
         print(f"Skipping {files[0].url}", flush=True)
         return ModMetadata(
-            id,
+            mod_index.id,
             old_meta.mod_id,
             mod_index.name,
             json["_sDescription"],
@@ -222,7 +222,7 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
         raise Exception("Fuji.json not found")
 
     return ModMetadata(
-        id,
+        mod_index.id,
         fuji_meta.id,
         mod_index.name,
         json["_sDescription"],
@@ -283,7 +283,6 @@ def main():
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
 
-    
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
