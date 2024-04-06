@@ -107,7 +107,7 @@ class GamebananaIndexMinified:
 @dataclass
 class IndexUpdateStatus:
     created: list[ModMetadata]
-    updated: list[ModMetadata]
+    updated: list[(ModMetadata, ModMetadata)]
 
 GITHUB_RUN_ID = os.getenv("GITHUB_RUN_ID")
 GITHUB_RUN_URL = f"https://github.com/psyGamer/GameBanana-Indexer/actions/runs/{GITHUB_RUN_ID}" # TODO: Change URL once in Fuji org!
@@ -413,7 +413,7 @@ def main():
             if old_meta is None: # New
                 update_status.created.append(meta)
             else:
-                update_status.updated.append(meta)
+                update_status.updated.append((old_meta, meta))
             
             pass
         except Exception as ex:
@@ -427,11 +427,32 @@ def main():
 
     for meta in update_status.created:
         # TODO: Handle https://gamebanana.com/tools/* URLs
-        embed = DiscordEmbed(title=f"New Mod: **{meta.name}**", description=meta.desc, url=f"https://gamebanana.com/mods/{meta.gamebanana_id}", color=WEBHOOK_COLOR_BANANA)
+        embed = DiscordEmbed(title=f"New: **{meta.name}**", description=meta.desc, url=f"https://gamebanana.com/mods/{meta.gamebanana_id}", color=WEBHOOK_COLOR_BANANA)
         embed.set_timestamp(meta.files[0].creation_date)
         embed.set_author(name=meta.author.name, url=meta.author.profile_url, icon_url=meta.author.icon_url)
         
         embed.add_embed_field(name="Download Latest Version", value=f"[{meta.files[0].name}]({meta.files[0].url})")
+
+        if len(meta.screenshots) > 0:
+            embed.set_image(url=meta.screenshots[0])
+
+        webhook.add_embed(embed)
+
+        for i in range(1, len(meta.screenshots)):
+            image_embed = DiscordEmbed(url=f"https://gamebanana.com/mods/{meta.gamebanana_id}")
+            image_embed.set_image(url=meta.screenshots[i])
+            webhook.add_embed(image_embed)
+        
+        webhook.execute(remove_embeds=True)
+
+    for old_meta, meta in update_status.updated:
+        # TODO: Handle https://gamebanana.com/tools/* URLs
+        embed = DiscordEmbed(title=f"Update: **{meta.name}**", description=meta.desc, url=f"https://gamebanana.com/mods/{meta.gamebanana_id}", color=WEBHOOK_COLOR_BANANA)
+        embed.set_timestamp(meta.files[0].creation_date)
+        embed.set_author(name=meta.author.name, url=meta.author.profile_url, icon_url=meta.author.icon_url)
+        
+        embed.add_embed_field(name="Download Latest Version", value=f"[{meta.files[0].name}]({meta.files[0].url})")
+        embed.add_embed_field(name="Version", value=f"**{old_meta.version}** → **{meta.version}**")
 
         if len(meta.screenshots) > 0:
             embed.set_image(url=meta.screenshots[0])
