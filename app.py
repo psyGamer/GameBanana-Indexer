@@ -23,6 +23,12 @@ class File:
     downloads: int
 
 @dataclass
+class Author:
+    name: str
+    icon_url: str
+    profile_url: str
+
+@dataclass
 class ModMetadata:
     gamebanana_id: int
     mod_id: str
@@ -31,7 +37,7 @@ class ModMetadata:
     version: str
     fuji_required_version: str
     dependencies: dict[str,str]
-    author: str
+    author: Author
     category: Category
     modify_date: int
     total_downloads: int
@@ -48,7 +54,7 @@ class ModMetadata:
             json_data["version"],
             json_data["fuji_required_version"],
             json_data["dependencies"],
-            json_data["author"],
+            Author(**json_data["author"]),
             Category(**json_data["category"]),
             json_data["modify_date"],
             json_data["total_downloads"],
@@ -72,7 +78,7 @@ class FujiMetadata:
 class ModIndexData:
     id: int
     name: str
-    author: str
+    author: Author
     modify_date: int
     screenshots: list[str]
 
@@ -99,17 +105,17 @@ class GamebananaIndexMinified:
 
 @dataclass
 class IndexUpdateStatus:
-    updated: list[str]
-    skipped: list[str]
-    invalid: list[str]
+    created: list[ModMetadata]
+    updated: list[ModMetadata]
 
 GITHUB_RUN_ID = os.getenv("GITHUB_RUN_ID")
 GITHUB_RUN_URL = f"https://github.com/psyGamer/GameBanana-Indexer/actions/runs/{GITHUB_RUN_ID}" # TODO: Change URL once in Fuji org!
 
 WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
-WEBHOOK_VERBOSE_THEAD_ID = "1225928648079446157"
+WEBHOOK_VERBOSE_THEAD_ID = "1225924082990841877"
 WEBHOOK_COLOR_ERROR = "bb1717"
 WEBHOOK_COLOR_SUCCESS = "89f556"
+WEBHOOK_COLOR_BANANA = "FFF133" 
 webhook = DiscordWebhook(url=WEBHOOK_URL)
 webhook_verbose = DiscordWebhook(url=WEBHOOK_URL, thread_id=WEBHOOK_VERBOSE_THEAD_ID)
 
@@ -144,6 +150,10 @@ def fetch_all_mods() -> list[ModIndexData]:
                 retries += 1
                 if retries > MAX_RETRY_ATTEMPTS:
                     print("Aborting update!")
+                    embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
+                    embed.set_timestamp()
+                    webhook_verbose.add_embed(embed)
+                    webhook_verbose.execute(remove_embeds=True)     
                     exit(-1)
                 time.sleep(RETRY_TIMEOUT_S)
               
@@ -152,7 +162,12 @@ def fetch_all_mods() -> list[ModIndexData]:
             for screenshot in mod["_aPreviewMedia"]["_aImages"]:
                 screenshots.append(f"{screenshot['_sBaseUrl']}/{screenshot['_sFile']}")
 
-            mod_indices.append(ModIndexData(mod["_idRow"], mod["_sName"], mod["_aSubmitter"]["_sName"], mod["_tsDateModified"], screenshots))
+            mod_indices.append(ModIndexData(
+                mod["_idRow"], 
+                mod["_sName"], 
+                Author(mod["_aSubmitter"]["_sName"], mod["_aSubmitter"]["_sAvatarUrl"], mod["_aSubmitter"]["_sProfileUrl"]), 
+                mod["_tsDateModified"], 
+                screenshots))
 
         if json["_aMetadata"]["_bIsComplete"]:
             return mod_indices
@@ -173,6 +188,10 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
                 print("Aborting fetch!")
+                embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
+                embed.set_timestamp()
+                webhook_verbose.add_embed(embed)
+                webhook_verbose.execute(remove_embeds=True)     
                 return None
             time.sleep(RETRY_TIMEOUT_S)
 
@@ -216,6 +235,10 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
                 print("Aborting fetch!")
+                embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
+                embed.set_timestamp()
+                webhook_verbose.add_embed(embed)
+                webhook_verbose.execute(remove_embeds=True)     
                 return None
             time.sleep(RETRY_TIMEOUT_S)
     
@@ -275,14 +298,17 @@ class EnhancedJSONEncoder(json.JSONEncoder):
 
 
 def main():
-
     old_index: Optional[GamebananaIndex] = None
     try:
         with open("gb_index.json", "r") as f:
             old_index = GamebananaIndex.from_json(json.load(f))
-    except Exception:
+    except Exception as ex:
         print("Cached previous index not found")
         print(traceback.format_exc())
+        embed = DiscordEmbed(title=f"Invalid Cache: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
+        embed.set_timestamp()
+        webhook_verbose.add_embed(embed)
+        webhook_verbose.execute(remove_embeds=True)     
     
     mod_indices = fetch_all_mods()
 
@@ -290,7 +316,7 @@ def main():
     mod_metas = []
     invalid_mods = []
 
-    update_status = IndexUpdateStatus([], [], [])
+    update_status = IndexUpdateStatus([], [])
 
     i = 0
     for idx in mod_indices:
@@ -304,7 +330,6 @@ def main():
             mod_metas.append(old_meta)
             id_to_index[idx.id] = i
             i += 1
-            update_status.skipped.append(idx.name)
             continue
 
         old_invalid: Optional[ModIndexData] = None
@@ -315,31 +340,48 @@ def main():
         if old_invalid is not None and idx.modify_date == old_invalid.modify_date:
             print(f"Still invalid {idx.id}")
             invalid_mods.append(old_invalid)
-            update_status.invalid.append(idx.name)
             continue
         
         try:
-            mod_metas.append(fetch_mod_metadata(old_meta, idx))
+            meta = fetch_mod_metadata(old_meta, idx)
+            mod_metas.append(meta)
             id_to_index[idx.id] = i
             i += 1
-            update_status.updated.append(idx.name)
+
+            if old_meta is None: # New
+                update_status.created.append(meta)
+            else:
+                update_status.updated.append(meta)
+            
             pass
         except Exception as ex:
             print(f"Failed fetching metadata: {ex}", flush=True)
             invalid_mods.append(idx)
-            update_status.invalid.append(idx.name)
 
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas, invalid_mods), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
         json.dump(GamebananaIndexMinified(id_to_index, mod_metas), f, separators=(',', ':'), cls=EnhancedJSONEncoder)
 
-    embed = DiscordEmbed(title=f"Index Updated", url=GITHUB_RUN_URL, color=WEBHOOK_COLOR_SUCCESS)
-    embed.set_timestamp()
-    embed.add_embed_field(name="Updated", value="\n".join(update_status.updated), inline=True)
-    embed.add_embed_field(name="Unchanged", value="\n".join(update_status.skipped), inline=True)
-    embed.add_embed_field(name="Invalid", value="\n".join(update_status.invalid), inline=True)
-    webhook_verbose.add_embed(embed)
+    for meta in update_status.created:
+        # TODO: Handle https://gamebanana.com/tools/* URLs
+        embed = DiscordEmbed(title=f"New Mod: **{meta.name}**", description=meta.desc, url=f"https://gamebanana.com/mods/{meta.gamebanana_id}", color=WEBHOOK_COLOR_BANANA)
+        embed.set_timestamp(meta.files[0].creation_date)
+        embed.set_author(name=meta.author.name, url=meta.author.profile_url, icon_url=meta.author.icon_url)
+        
+        embed.add_embed_field(name="Download Latest Version", value=f"[{meta.files[0].name}]({meta.files[0].url})")
+
+        if len(meta.screenshots) > 0:
+            embed.set_image(url=meta.screenshots[0])
+
+        webhook.add_embed(embed)
+
+        for i in range(1, len(meta.screenshots)):
+            image_embed = DiscordEmbed(url=f"https://gamebanana.com/mods/{meta.gamebanana_id}")
+            image_embed.set_image(url=meta.screenshots[i])
+            webhook.add_embed(image_embed)
+        
+        webhook.execute(remove_embeds=True)
 
 if __name__ == "__main__":
     try:
@@ -350,6 +392,4 @@ if __name__ == "__main__":
         embed = DiscordEmbed(title=f"Indexer Failure: {ex}", description=traceback.format_exc(), url=GITHUB_RUN_URL, color=WEBHOOK_COLOR_ERROR)
         embed.set_timestamp()
         webhook_verbose.add_embed(embed)
-    finally:
-        response = webhook_verbose.execute()
-    
+        webhook_verbose.execute(remove_embeds=True)     
