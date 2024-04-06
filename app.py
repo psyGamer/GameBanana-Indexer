@@ -319,7 +319,7 @@ def main():
     update_status = IndexUpdateStatus([], [])
 
     i = 0
-    for idx in mod_indices:
+    for idx in reversed(mod_indices): # Process mods from oldest to newest
         old_meta: Optional[ModMetadata] = None
         if old_index is not None and f"{idx.id}" in old_index.id_to_index:
             old_meta = old_index.mod_metas[old_index.id_to_index[f"{idx.id}"]]
