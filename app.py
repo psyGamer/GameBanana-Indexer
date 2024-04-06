@@ -420,6 +420,22 @@ def main():
             log(f"Failed fetching metadata: {ex}")
             invalid_mods.append(idx)
 
+            # TODO: Handle https://gamebanana.com/tools/* URLs
+            embed = DiscordEmbed(title=f"Invalid: **{idx.name}**", description=str(ex), url=f"https://gamebanana.com/mods/{idx.id}", color=WEBHOOK_COLOR_ERROR)
+            embed.set_timestamp(idx.modify_date)
+            embed.set_author(name=idx.author.name, url=idx.author.profile_url, icon_url=idx.author.icon_url)
+
+            if len(idx.screenshots) > 0:
+                embed.set_image(url=idx.screenshots[0])
+
+            webhook.add_embed(embed)
+
+            for i in range(1, len(idx.screenshots)):
+                image_embed = DiscordEmbed(url=f"https://gamebanana.com/mods/{idx.id}")
+                image_embed.set_image(url=idx.screenshots[i])
+            
+            webhook.execute(remove_embeds=True)
+
     with open("gb_index.json", "w") as f:
         json.dump(GamebananaIndex(id_to_index, mod_metas, invalid_mods), f, ensure_ascii=False, indent=4, cls=EnhancedJSONEncoder)
     with open("gb_index.min.json", "w") as f:
