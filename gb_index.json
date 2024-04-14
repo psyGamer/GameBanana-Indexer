@@ -27,7 +27,8 @@
         "503593": 24,
         "502397": 25,
         "504009": 26,
-        "505079": 27
+        "505079": 27,
+        "507290": 28
     },
     "mod_metas": [
         {
@@ -986,6 +987,46 @@
                 "https://images.gamebanana.com/img/ss/mods/660e4e3dc19c5.jpg",
                 "https://images.gamebanana.com/img/ss/mods/660e4e42cfbaa.jpg",
                 "https://images.gamebanana.com/img/ss/mods/660e4eb508132.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 507290,
+            "mod_id": "wiedo-beesides",
+            "name": "The bee-sides",
+            "desc": "All new levels, 22 new berries to find!",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "wiedo",
+                "icon_url": "https://images.gamebanana.com/img/av/661bd7d711b01.jpg",
+                "profile_url": "https://gamebanana.com/members/3314170"
+            },
+            "category": {
+                "id": 27586,
+                "name": "Maps"
+            },
+            "modify_date": 1713100579,
+            "total_downloads": 0,
+            "files": [
+                {
+                    "name": "wiedo-beesides-v1_1-fuji.zip",
+                    "url": "https://gamebanana.com/dl/1175339",
+                    "size": 2165744,
+                    "creation_date": 1713099911,
+                    "downloads": 0
+                },
+                {
+                    "name": "wiedo-beesides-v1_1.zip",
+                    "url": "https://gamebanana.com/dl/1175340",
+                    "size": 2166168,
+                    "creation_date": 1713099915,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/661bd475e05d8.jpg",
+                "https://images.gamebanana.com/img/ss/mods/661bd3386f553.jpg"
             ]
         }
     ],
