@@ -131,6 +131,7 @@ GB_GAME_ID = "19773"
 
 MAX_RETRY_ATTEMPTS = 5
 RETRY_TIMEOUT_S = 5
+DISCORD_EMBED_UPDATE_INTERVAL_S = 1
 
 # The webhook library doesn't include the thread_id param when editing...
 def edit_webhook(self: DiscordWebhook) -> "requests.Response":
@@ -184,19 +185,40 @@ def edit_webhook(self: DiscordWebhook) -> "requests.Response":
 
 embed_needs_update = False
 def live_status_updater():
-    t = threading.currentThread()
+    global embed_needs_update
+
+    t = threading.current_thread()
     while getattr(t, "do_run", True):
-        time.sleep(3) # Avoid rate limiting
         if not embed_needs_update:
+            time.sleep(DISCORD_EMBED_UPDATE_INTERVAL_S)
             continue
+        embed_needs_update = False
         live_status_embed.set_timestamp()
-        edit_webhook(webhook_live_status)
+        print(edit_webhook(webhook_live_status).content)
+        print(len(live_status_embed.description))
+        time.sleep(DISCORD_EMBED_UPDATE_INTERVAL_S)
         
 
-def log(msg: str):
+def error(msg: str, ex: Exception):
+    print(msg) 
+    print(traceback.format_exc(), flush=True) # Need to flush because otherwise GitHub would buffer it
+
+    embed = DiscordEmbed(title=f"{msg}: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
+    embed.set_timestamp()
+    # @psygamer @Fuji Maintainers
+    webhook_verbose.content = "<@781130584398889000> <@&1202622917666668574>"
+    webhook_verbose.add_embed(embed)
+    print(webhook_verbose.execute(remove_embeds=True).content)
+    webhook_verbose.content = ""
+
+
+def log(msg: str, verbose: bool = False):
+    global embed_needs_update
+
     print(msg, flush=True) # Need to flush because otherwise GitHub would buffer it
-    live_status_embed.description += f"{msg}\n"
-    embed_needs_update = True
+    if not verbose:
+        live_status_embed.description += f"{msg}\n"
+        embed_needs_update = True
 
 
 def fetch_all_mods() -> list[ModIndexData]:
@@ -211,10 +233,11 @@ def fetch_all_mods() -> list[ModIndexData]:
 
         json = None
         
+        log("Fetching mod index")
         while True:
+            url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
             try:
-                url = f"https://gamebanana.com/apiv11/Mod/Index?_aFilters[Generic_Game]={GB_GAME_ID}&_nPerpage=50&_nPage={curr_page}"
-                log(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})")
+                log(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", verbose=retries <= 1)
                 res = requests.get(url)
                 if res.status_code != 200:
                     raise Exception(res.text)
@@ -224,11 +247,8 @@ def fetch_all_mods() -> list[ModIndexData]:
                 log(f"Failed to fetch! {ex}")
                 retries += 1
                 if retries > MAX_RETRY_ATTEMPTS:
+                    error(f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
                     log("Aborting update!")
-                    embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
-                    embed.set_timestamp()
-                    webhook_verbose.add_embed(embed)
-                    webhook_verbose.execute(remove_embeds=True)     
                     exit(-1)
                 time.sleep(RETRY_TIMEOUT_S)
               
@@ -250,10 +270,11 @@ def fetch_all_mods() -> list[ModIndexData]:
 def fetch_fuji_meta(file: File) -> FujiMetadata:
     retries = 1
     res = None
-    
+
+    log(f"Fetching Fuji.json from {file.name}")
     while True:
         try:
-            log(f"Fetching {file.url} (try {retries} / {MAX_RETRY_ATTEMPTS})")
+            log(f"Fetching {file.url} (try {retries} / {MAX_RETRY_ATTEMPTS})", verbose=retries <= 1)
             res = requests.get(file.url)
             if res.status_code != 200:
                     raise Exception(res.text)
@@ -262,11 +283,9 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
             log(f"Failed to fetch! {ex}")
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
-                log("Aborting fetch!")
-                embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
-                embed.set_timestamp()
-                webhook_verbose.add_embed(embed)
-                webhook_verbose.execute(remove_embeds=True)     
+                error(f"Failed to fetch '{file.url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
+                log("Aborting update!")
+                exit(-1)
                 return None
             time.sleep(RETRY_TIMEOUT_S)
 
@@ -296,10 +315,11 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
 
     json = None
         
+    log(f"Fetching metadata for {mod_index.id}")
     while True:
+        url = f"https://gamebanana.com/apiv11/Mod/{mod_index.id}?_csvProperties=_sDescription,_sDownloadUrl,_aFiles,_aCategory,_nDownloadCount"
         try:
-            url = f"https://gamebanana.com/apiv11/Mod/{mod_index.id}?_csvProperties=_sDescription,_sDownloadUrl,_aFiles,_aCategory,_nDownloadCount"
-            log(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})")
+            log(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", verbose=retries <= 1)
             res = requests.get(url)
             if res.status_code != 200:
                 raise Exception(res.text)
@@ -309,11 +329,9 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
             log(f"Failed to fetch! {ex}")
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
-                log("Aborting fetch!")
-                embed = DiscordEmbed(title=f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
-                embed.set_timestamp()
-                webhook_verbose.add_embed(embed)
-                webhook_verbose.execute(remove_embeds=True)     
+                error(f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
+                log("Aborting update!")
+                exit(-1)
                 return None
             time.sleep(RETRY_TIMEOUT_S)
     
@@ -378,12 +396,7 @@ def main():
         with open("gb_index.json", "r") as f:
             old_index = GamebananaIndex.from_json(json.load(f))
     except Exception as ex:
-        log("Cached previous index not found")
-        log(traceback.format_exc())
-        embed = DiscordEmbed(title=f"Invalid Cache: {ex}", description=traceback.format_exc(), color=WEBHOOK_COLOR_ERROR)
-        embed.set_timestamp()
-        webhook_verbose.add_embed(embed)
-        webhook_verbose.execute(remove_embeds=True)     
+        error("Invalid Cache", ex)
     
     mod_indices = fetch_all_mods()
 
@@ -500,23 +513,19 @@ def main():
         webhook.execute(remove_embeds=True)
 
 if __name__ == "__main__":
-
     live_update_thread = threading.Thread(target=live_status_updater)
     live_update_thread.start()
     
     try:
         main()
+        embed_needs_update = False
         live_status_embed.description += "\n**Done**\n"
         live_status_embed.set_timestamp()
         live_status_embed.set_color(WEBHOOK_COLOR_SUCCESS)
-        edit_webhook(webhook_live_status)
+        print("done")
+        print(edit_webhook(webhook_live_status).content)
     except Exception as ex:
-        log(ex)
-        log(traceback.format_exc())
-        embed = DiscordEmbed(title=f"Indexer Failure: {ex}", description=traceback.format_exc(), url=GITHUB_RUN_URL, color=WEBHOOK_COLOR_ERROR)
-        embed.set_timestamp()
-        webhook_verbose.add_embed(embed)
-        webhook_verbose.execute(remove_embeds=True)     
+        error("Indexer Failure", ex)
     finally:
         live_update_thread.do_run = False
 
