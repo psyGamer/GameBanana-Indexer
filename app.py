@@ -5,6 +5,7 @@ import dataclasses
 import traceback
 import time
 import os
+import sys
 from dataclasses import dataclass
 from typing import Optional
 from discord_webhook import DiscordWebhook, DiscordEmbed
@@ -380,14 +381,17 @@ def main():
 
     update_status = IndexUpdateStatus([], [])
 
+    # Fetch the metadata of all mods once a day to update download counts, etc.
+    perform_metadata_update = "--metadate-update" in sys.argv
+
     i = 0
     for idx in reversed(mod_indices): # Process mods from oldest to newest
         old_meta: Optional[ModMetadata] = None
         if old_index is not None and f"{idx.id}" in old_index.id_to_index:
             old_meta = old_index.mod_metas[old_index.id_to_index[f"{idx.id}"]]
 
-        # Skip fetching metadata if mod wasn't modified
-        if old_meta is not None and idx.modify_date == old_meta.modify_date:
+        # Skip fetching metadata if mod wasn't modified and a metadate update isn't forced
+        if not perform_metadata_update and old_meta is not None and idx.modify_date == old_meta.modify_date:
             log(f"Skipping {idx.id}")
             mod_metas.append(old_meta)
             id_to_index[idx.id] = i

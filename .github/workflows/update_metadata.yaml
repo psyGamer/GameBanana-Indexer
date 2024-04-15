@@ -1,15 +1,17 @@
-name: Update GameBanana index
+name: Update GameBanana metadata
 
 on:
   workflow_dispatch:
+  push:
+    branches: '*'
   schedule:
-    - cron:  '0 6,12,18 * * *' # Every 6 hours (Midnight is a metadata update)
+    - cron:  '0 0 * * *' # Every midnight
 
 permissions:
   contents: write
 
 jobs:
-  update_index:
+  update_metadata:
     runs-on: ubuntu-latest
     steps:
       - name: Store time of start
@@ -28,10 +30,10 @@ jobs:
           pip install -r requirements.txt
 
       
-      - name: Run index updater
+      - name: Run index updater with metadata
         run: |
           source .venv/bin/activate
-          python app.py
+          python app.py --metadate-update
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -43,3 +45,4 @@ jobs:
           git add -f gb_index.json gb_index.min.json
           git commit -m "Update GameBanana index at ${{ env.START_TIME }}" || true
           git push
+
