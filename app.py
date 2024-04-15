@@ -6,6 +6,7 @@ import traceback
 import time
 import os
 import sys
+import threading
 from dataclasses import dataclass
 from typing import Optional
 from discord_webhook import DiscordWebhook, DiscordEmbed
@@ -181,11 +182,22 @@ def edit_webhook(self: DiscordWebhook) -> "requests.Response":
          pass
      return response
 
+embed_needs_update = False
+def live_status_updater():
+    t = threading.currentThread()
+    while getattr(t, "do_run", True):
+        time.sleep(3) # Avoid rate limiting
+        if not embed_needs_update:
+            continue
+        live_status_embed.set_timestamp()
+        edit_webhook(webhook_live_status)
+        
+
 def log(msg: str):
     print(msg, flush=True) # Need to flush because otherwise GitHub would buffer it
     live_status_embed.description += f"{msg}\n"
-    live_status_embed.set_timestamp()
-    edit_webhook(webhook_live_status)
+    embed_needs_update = True
+
 
 def fetch_all_mods() -> list[ModIndexData]:
     mod_indices = []
@@ -488,6 +500,10 @@ def main():
         webhook.execute(remove_embeds=True)
 
 if __name__ == "__main__":
+
+    live_update_thread = threading.Thread(target=live_status_updater)
+    live_update_thread.start()
+    
     try:
         main()
         live_status_embed.description += "\n**Done**\n"
@@ -501,3 +517,6 @@ if __name__ == "__main__":
         embed.set_timestamp()
         webhook_verbose.add_embed(embed)
         webhook_verbose.execute(remove_embeds=True)     
+    finally:
+        live_update_thread.do_run = False
+
