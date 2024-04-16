@@ -993,7 +993,7 @@
             "mod_id": "SuperMario64",
             "name": "Super Mario 64 Mechanics",
             "desc": "Play as Mario from Super Mario 64!",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "fuji_required_version": "0.6.0",
             "dependencies": {},
             "author": {
@@ -1005,15 +1005,22 @@
                 "id": 27699,
                 "name": "Gameplay"
             },
-            "modify_date": 1711711891,
-            "total_downloads": 59,
+            "modify_date": 1713280035,
+            "total_downloads": 60,
             "files": [
+                {
+                    "name": "supermario64-v120.zip",
+                    "url": "https://gamebanana.com/dl/1176517",
+                    "size": 1371015,
+                    "creation_date": 1713280018,
+                    "downloads": 0
+                },
                 {
                     "name": "supermario64-v110.zip",
                     "url": "https://gamebanana.com/dl/1164607",
                     "size": 1367904,
                     "creation_date": 1711706710,
-                    "downloads": 58
+                    "downloads": 59
                 },
                 {
                     "name": "supermario64-v100.zip",
