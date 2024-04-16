@@ -228,9 +228,7 @@ def fetch_all_mods() -> list[ModIndexData]:
     curr_page = 0
     while True:
         curr_page += 1
-
         retries = 1
-
         json = None
         
         log("Fetching mod index")
@@ -284,8 +282,6 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
                 error(f"Failed to fetch '{file.url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
-                log("Aborting update!")
-                exit(-1)
                 return None
             time.sleep(RETRY_TIMEOUT_S)
 
@@ -312,9 +308,8 @@ def fetch_fuji_meta(file: File) -> FujiMetadata:
         
 def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData) -> ModMetadata:
     retries = 1
-
     json = None
-        
+
     log(f"Fetching metadata for {mod_index.id}")
     while True:
         url = f"https://gamebanana.com/apiv11/Mod/{mod_index.id}?_csvProperties=_sDescription,_sDownloadUrl,_aFiles,_aCategory,_nDownloadCount"
@@ -330,8 +325,6 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
             retries += 1
             if retries > MAX_RETRY_ATTEMPTS:
                 error(f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
-                log("Aborting update!")
-                exit(-1)
                 return None
             time.sleep(RETRY_TIMEOUT_S)
     
@@ -381,6 +374,50 @@ def fetch_mod_metadata(old_meta: Optional[ModMetadata], mod_index: ModIndexData)
         files,
         mod_index.screenshots
     )
+
+
+def fetch_update_changelog(meta: ModMetadata) -> Optional[str]:
+    retries = 1
+    json = None
+
+    log(f"Fetching latest update for {meta.gamebanana_id}")
+    while True:
+        url = f"https://gamebanana.com/apiv11/Mod/{meta.gamebanana_id}/Updates"
+        try:
+            log(f"Fetching {url} (try {retries} / {MAX_RETRY_ATTEMPTS})", verbose=retries <= 1)
+            res = requests.get(url)
+            if res.status_code != 200:
+                raise Exception(res.text)
+            json = res.json()
+            break
+        except Exception as ex:
+            log(f"Failed to fetch! {ex}")
+            retries += 1
+            if retries > MAX_RETRY_ATTEMPTS:
+                error(f"Failed to fetch '{url}' in {MAX_RETRY_ATTEMPTS} attempts", ex)
+                return None
+            time.sleep(RETRY_TIMEOUT_S)
+
+    # No updates available
+    if json["_aMetadata"]["_nRecordCount"] == 0:
+        return None
+
+    # Check if latest record matches current version / latest file
+    targets_latest_update = False
+    record = json["_aRecords"][0]
+    if f"{meta.version}" in record["_sVersion"]:
+        targets_latest_update = True
+    elif record["_aFiles"] is not None:
+        target_file = meta.files[0].name
+        for file in record["_aFiles"]:
+            if file["_sFile"] == target_file:
+                targets_latest_update = True
+                break
+
+    if not targets_latest_update:
+        return None # No valid update found
+
+    return "\n".join([f"- **{line['cat']}**: {line['text']}" for line in record["_aChangeLog"]])
 
   
 class EnhancedJSONEncoder(json.JSONEncoder):
@@ -499,6 +536,11 @@ def main():
         
         embed.add_embed_field(name="Download Latest Version", value=f"[{meta.files[0].name}]({meta.files[0].url})")
         embed.add_embed_field(name="Version", value=f"**{old_meta.version}** → **{meta.version}**")
+
+        # Try to find an update post
+        changelog = fetch_update_changelog(meta)
+        if changelog is not None:
+            embed.add_embed_field(name="Change Log", value=changelog, inline=False)
 
         if len(meta.screenshots) > 0:
             embed.set_image(url=meta.screenshots[0])
