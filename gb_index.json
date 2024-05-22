@@ -28,7 +28,8 @@
         "504009": 25,
         "505079": 26,
         "507290": 27,
-        "502397": 28
+        "502397": 28,
+        "515141": 29
     },
     "mod_metas": [
         {
@@ -1034,6 +1035,39 @@
                 "https://images.gamebanana.com/img/ss/mods/65fdc86d02c7d.jpg",
                 "https://images.gamebanana.com/img/ss/mods/6606a672aa615.jpg",
                 "https://images.gamebanana.com/img/ss/mods/65fdc8d70797b.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 515141,
+            "mod_id": "MCModel",
+            "name": "Minecraft Skin Player",
+            "desc": "Cool.",
+            "version": "0.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "RobotGalaxy",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3340697"
+            },
+            "category": {
+                "id": 27582,
+                "name": "Skins"
+            },
+            "modify_date": 1716392699,
+            "total_downloads": 0,
+            "files": [
+                {
+                    "name": "mcplayermodel_9a505.zip",
+                    "url": "https://gamebanana.com/dl/1199363",
+                    "size": 255872,
+                    "creation_date": 1716392498,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/664e0dd6b4a9d.jpg",
+                "https://images.gamebanana.com/img/ss/mods/664e0dda6e766.jpg"
             ]
         }
     ],
