@@ -2,8 +2,9 @@ name: Update GameBanana index
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '0 6,12,18 * * *' # Every 6 hours (Midnight is a metadata update)
+  # Currently disabled. Not enough traffic to be worth.
+  #schedule:
+  #  - cron:  '0 6,12,18 * * *' # Every 6 hours (Midnight is a metadata update)
 
 permissions:
   contents: write
