@@ -2,34 +2,36 @@
     "id_to_index": {
         "493499": 0,
         "493503": 1,
-        "493504": 2,
-        "493663": 3,
-        "493734": 4,
-        "493858": 5,
-        "493912": 6,
-        "494054": 7,
-        "494691": 8,
-        "494697": 9,
-        "494728": 10,
-        "494742": 11,
-        "495069": 12,
-        "495232": 13,
-        "495245": 14,
-        "496493": 15,
-        "496501": 16,
-        "496509": 17,
-        "496691": 18,
-        "495333": 19,
-        "495402": 20,
-        "500168": 21,
-        "501350": 22,
-        "503591": 23,
-        "503593": 24,
-        "504009": 25,
-        "505079": 26,
-        "507290": 27,
-        "502397": 28,
-        "515141": 29
+        "493663": 2,
+        "493734": 3,
+        "493858": 4,
+        "493912": 5,
+        "494054": 6,
+        "494691": 7,
+        "494697": 8,
+        "494728": 9,
+        "494742": 10,
+        "495069": 11,
+        "495232": 12,
+        "495245": 13,
+        "496493": 14,
+        "496501": 15,
+        "496509": 16,
+        "496691": 17,
+        "495333": 18,
+        "495402": 19,
+        "500168": 20,
+        "501350": 21,
+        "503591": 22,
+        "503593": 23,
+        "504009": 24,
+        "505079": 25,
+        "507290": 26,
+        "502397": 27,
+        "515141": 28,
+        "493504": 29,
+        "523926": 30,
+        "523928": 31
     },
     "mod_metas": [
         {
@@ -101,39 +103,6 @@
                 "https://images.gamebanana.com/img/ss/mods/65d19ff526444.jpg",
                 "https://images.gamebanana.com/img/ss/mods/65d19ff570a18.jpg",
                 "https://images.gamebanana.com/img/ss/mods/65bd248813304.jpg"
-            ]
-        },
-        {
-            "gamebanana_id": 493504,
-            "mod_id": "Dissi_owo_maddy",
-            "name": "owo madeline",
-            "desc": "make madeline :3!",
-            "version": "1",
-            "fuji_required_version": null,
-            "dependencies": {},
-            "author": {
-                "name": "Dissi de nd",
-                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
-                "profile_url": "https://gamebanana.com/members/3172632"
-            },
-            "category": {
-                "id": 27582,
-                "name": "Skins"
-            },
-            "modify_date": 1707602875,
-            "total_downloads": 48,
-            "files": [
-                {
-                    "name": "dissi_owomaddy_d2443.zip",
-                    "url": "https://gamebanana.com/dl/1137082",
-                    "size": 105392,
-                    "creation_date": 1707602872,
-                    "downloads": 35
-                }
-            ],
-            "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/65bd245d8c2ce.jpg",
-                "https://images.gamebanana.com/img/ss/mods/65bd2483e8d94.jpg"
             ]
         },
         {
@@ -967,14 +936,14 @@
                 "name": "Maps"
             },
             "modify_date": 1713100579,
-            "total_downloads": 27,
+            "total_downloads": 28,
             "files": [
                 {
                     "name": "wiedo-beesides-v1_1-fuji.zip",
                     "url": "https://gamebanana.com/dl/1175339",
                     "size": 2165744,
                     "creation_date": 1713099911,
-                    "downloads": 25
+                    "downloads": 26
                 },
                 {
                     "name": "wiedo-beesides-v1_1.zip",
@@ -1007,14 +976,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1713280035,
-            "total_downloads": 123,
+            "total_downloads": 126,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 58
+                    "downloads": 61
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -1068,6 +1037,105 @@
             "screenshots": [
                 "https://images.gamebanana.com/img/ss/mods/664e0dd6b4a9d.jpg",
                 "https://images.gamebanana.com/img/ss/mods/664e0dda6e766.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 493504,
+            "mod_id": "Dissi_owo_maddy",
+            "name": "owo madeline",
+            "desc": "make madeline :3!",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Dissi de nd",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3172632"
+            },
+            "category": {
+                "id": 27582,
+                "name": "Skins"
+            },
+            "modify_date": 1719348531,
+            "total_downloads": 48,
+            "files": [
+                {
+                    "name": "dissi_owomaddy_6191b.zip",
+                    "url": "https://gamebanana.com/dl/1223302",
+                    "size": 105395,
+                    "creation_date": 1719348527,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/65bd245d8c2ce.jpg",
+                "https://images.gamebanana.com/img/ss/mods/65bd2483e8d94.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 523926,
+            "mod_id": "Dissi_Ink_Baddy",
+            "name": "Inkblott Badeline",
+            "desc": "",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Dissi de nd",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3172632"
+            },
+            "category": {
+                "id": 27582,
+                "name": "Skins"
+            },
+            "modify_date": 1719348895,
+            "total_downloads": 0,
+            "files": [
+                {
+                    "name": "dissi_ink_baddy.zip",
+                    "url": "https://gamebanana.com/dl/1223305",
+                    "size": 105368,
+                    "creation_date": 1719348719,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/667b2e7f61a3f.jpg",
+                "https://images.gamebanana.com/img/ss/mods/667b2e7f5f5f3.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 523928,
+            "mod_id": "Dissi_Ink_Maddy",
+            "name": "InkBlott Madeline",
+            "desc": "",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Dissi de nd",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3172632"
+            },
+            "category": {
+                "id": 27582,
+                "name": "Skins"
+            },
+            "modify_date": 1719349052,
+            "total_downloads": 0,
+            "files": [
+                {
+                    "name": "dissi_ink_maddy.zip",
+                    "url": "https://gamebanana.com/dl/1223312",
+                    "size": 105241,
+                    "creation_date": 1719349045,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/667b2f2218659.jpg",
+                "https://images.gamebanana.com/img/ss/mods/667b2f221ca10.jpg"
             ]
         }
     ],
