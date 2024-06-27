@@ -18,20 +18,20 @@
         "496501": 15,
         "496509": 16,
         "496691": 17,
-        "495333": 18,
-        "495402": 19,
-        "500168": 20,
-        "501350": 21,
-        "503591": 22,
-        "503593": 23,
-        "504009": 24,
-        "505079": 25,
-        "507290": 26,
-        "502397": 27,
-        "515141": 28,
-        "493504": 29,
-        "523926": 30,
-        "523928": 31
+        "495402": 18,
+        "500168": 19,
+        "501350": 20,
+        "503591": 21,
+        "503593": 22,
+        "504009": 23,
+        "505079": 24,
+        "507290": 25,
+        "502397": 26,
+        "515141": 27,
+        "493504": 28,
+        "523926": 29,
+        "523928": 30,
+        "495333": 31
     },
     "mod_metas": [
         {
@@ -52,14 +52,14 @@
                 "name": "Maps"
             },
             "modify_date": 1707602896,
-            "total_downloads": 63,
+            "total_downloads": 64,
             "files": [
                 {
                     "name": "dissi_test_map_bf340.zip",
                     "url": "https://gamebanana.com/dl/1137083",
                     "size": 8502,
                     "creation_date": 1707602894,
-                    "downloads": 38
+                    "downloads": 39
                 }
             ],
             "screenshots": [
@@ -85,14 +85,14 @@
                 "name": "Skins"
             },
             "modify_date": 1708284508,
-            "total_downloads": 66,
+            "total_downloads": 67,
             "files": [
                 {
                     "name": "pridecoatpack_daf24.zip",
                     "url": "https://gamebanana.com/dl/1141184",
                     "size": 2154636,
                     "creation_date": 1708237105,
-                    "downloads": 37
+                    "downloads": 38
                 }
             ],
             "screenshots": [
@@ -302,14 +302,14 @@
                 "name": "Actors"
             },
             "modify_date": 1707441849,
-            "total_downloads": 33,
+            "total_downloads": 34,
             "files": [
                 {
                     "name": "wingedberry.zip",
                     "url": "https://gamebanana.com/dl/1135983",
                     "size": 141025,
                     "creation_date": 1707439553,
-                    "downloads": 33
+                    "downloads": 34
                 }
             ],
             "screenshots": [
@@ -401,14 +401,14 @@
                 "name": "Actors"
             },
             "modify_date": 1707458393,
-            "total_downloads": 34,
+            "total_downloads": 35,
             "files": [
                 {
                     "name": "berrygate.zip",
                     "url": "https://gamebanana.com/dl/1136130",
                     "size": 19314,
                     "creation_date": 1707458048,
-                    "downloads": 34
+                    "downloads": 35
                 }
             ],
             "screenshots": [
@@ -533,14 +533,14 @@
                 "name": "Other/Misc"
             },
             "modify_date": 1710310360,
-            "total_downloads": 50,
+            "total_downloads": 51,
             "files": [
                 {
                     "name": "replayablecassettemod_08dd6.zip",
                     "url": "https://gamebanana.com/dl/1154842",
                     "size": 17756,
                     "creation_date": 1710310357,
-                    "downloads": 32
+                    "downloads": 33
                 }
             ],
             "screenshots": [
@@ -650,39 +650,6 @@
             ]
         },
         {
-            "gamebanana_id": 495333,
-            "mod_id": "Dissi_Balloon",
-            "name": "Balloon mod!",
-            "desc": "",
-            "version": "0.1.1",
-            "fuji_required_version": null,
-            "dependencies": {},
-            "author": {
-                "name": "Dissi de nd",
-                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
-                "profile_url": "https://gamebanana.com/members/3172632"
-            },
-            "category": {
-                "id": 27704,
-                "name": "Actors"
-            },
-            "modify_date": 1708366608,
-            "total_downloads": 40,
-            "files": [
-                {
-                    "name": "dissi_balloon_08e9b.zip",
-                    "url": "https://gamebanana.com/dl/1142226",
-                    "size": 22204,
-                    "creation_date": 1708366605,
-                    "downloads": 33
-                }
-            ],
-            "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/65c9c31cbcde1.jpg",
-                "https://images.gamebanana.com/img/ss/mods/65c9c31cbb07b.jpg"
-            ]
-        },
-        {
             "gamebanana_id": 495402,
             "mod_id": "Dash_Switch",
             "name": "Dash Switch",
@@ -733,14 +700,14 @@
                 "name": "Maps"
             },
             "modify_date": 1710084559,
-            "total_downloads": 52,
+            "total_downloads": 53,
             "files": [
                 {
                     "name": "c0a0_751fa.zip",
                     "url": "https://gamebanana.com/dl/1153461",
                     "size": 289131,
                     "creation_date": 1710084469,
-                    "downloads": 52
+                    "downloads": 53
                 }
             ],
             "screenshots": [
@@ -799,14 +766,14 @@
                 "name": "Other/Misc"
             },
             "modify_date": 1711665336,
-            "total_downloads": 42,
+            "total_downloads": 43,
             "files": [
                 {
                     "name": "discord_rich_presence.zip",
                     "url": "https://gamebanana.com/dl/1164234",
                     "size": 297536,
                     "creation_date": 1711665309,
-                    "downloads": 42
+                    "downloads": 43
                 }
             ],
             "screenshots": [
@@ -865,14 +832,14 @@
                 "name": "Maps"
             },
             "modify_date": 1711823824,
-            "total_downloads": 63,
+            "total_downloads": 64,
             "files": [
                 {
                     "name": "elyravioli_mysticalmixtapes_6b99b.zip",
                     "url": "https://gamebanana.com/dl/1165584",
                     "size": 2115760,
                     "creation_date": 1711823517,
-                    "downloads": 63
+                    "downloads": 64
                 }
             ],
             "screenshots": [
@@ -936,14 +903,14 @@
                 "name": "Maps"
             },
             "modify_date": 1713100579,
-            "total_downloads": 28,
+            "total_downloads": 29,
             "files": [
                 {
                     "name": "wiedo-beesides-v1_1-fuji.zip",
                     "url": "https://gamebanana.com/dl/1175339",
                     "size": 2165744,
                     "creation_date": 1713099911,
-                    "downloads": 26
+                    "downloads": 27
                 },
                 {
                     "name": "wiedo-beesides-v1_1.zip",
@@ -976,14 +943,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1713280035,
-            "total_downloads": 126,
+            "total_downloads": 129,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 61
+                    "downloads": 64
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -1057,14 +1024,14 @@
                 "name": "Skins"
             },
             "modify_date": 1719348531,
-            "total_downloads": 48,
+            "total_downloads": 49,
             "files": [
                 {
                     "name": "dissi_owomaddy_6191b.zip",
                     "url": "https://gamebanana.com/dl/1223302",
                     "size": 105395,
                     "creation_date": 1719348527,
-                    "downloads": 0
+                    "downloads": 1
                 }
             ],
             "screenshots": [
@@ -1090,14 +1057,14 @@
                 "name": "Skins"
             },
             "modify_date": 1719348895,
-            "total_downloads": 0,
+            "total_downloads": 1,
             "files": [
                 {
                     "name": "dissi_ink_baddy.zip",
                     "url": "https://gamebanana.com/dl/1223305",
                     "size": 105368,
                     "creation_date": 1719348719,
-                    "downloads": 0
+                    "downloads": 1
                 }
             ],
             "screenshots": [
@@ -1123,19 +1090,52 @@
                 "name": "Skins"
             },
             "modify_date": 1719349052,
-            "total_downloads": 0,
+            "total_downloads": 2,
             "files": [
                 {
                     "name": "dissi_ink_maddy.zip",
                     "url": "https://gamebanana.com/dl/1223312",
                     "size": 105241,
                     "creation_date": 1719349045,
-                    "downloads": 0
+                    "downloads": 1
                 }
             ],
             "screenshots": [
                 "https://images.gamebanana.com/img/ss/mods/667b2f2218659.jpg",
                 "https://images.gamebanana.com/img/ss/mods/667b2f221ca10.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 495333,
+            "mod_id": "Dissi_Balloon",
+            "name": "Balloon mod!",
+            "desc": "",
+            "version": "0.2.1",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Dissi de nd",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3172632"
+            },
+            "category": {
+                "id": 27704,
+                "name": "Actors"
+            },
+            "modify_date": 1719365437,
+            "total_downloads": 40,
+            "files": [
+                {
+                    "name": "dissi_balloon_b2541.zip",
+                    "url": "https://gamebanana.com/dl/1223422",
+                    "size": 31113,
+                    "creation_date": 1719365418,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/65c9c31cbcde1.jpg",
+                "https://images.gamebanana.com/img/ss/mods/65c9c31cbb07b.jpg"
             ]
         }
     ],
