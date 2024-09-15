@@ -31,7 +31,8 @@
         "493504": 28,
         "523926": 29,
         "523928": 30,
-        "495333": 31
+        "495333": 31,
+        "542185": 32
     },
     "mod_metas": [
         {
@@ -1136,6 +1137,39 @@
             "screenshots": [
                 "https://images.gamebanana.com/img/ss/mods/65c9c31cbcde1.jpg",
                 "https://images.gamebanana.com/img/ss/mods/65c9c31cbb07b.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 542185,
+            "mod_id": "playable billie",
+            "name": "Playable Billie from Billie Bust Up",
+            "desc": "Playable Billie",
+            "version": "2.0.0",
+            "fuji_required_version": "0.5.0",
+            "dependencies": {},
+            "author": {
+                "name": "somtin fey",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3742593"
+            },
+            "category": {
+                "id": 27582,
+                "name": "Skins"
+            },
+            "modify_date": 1726345393,
+            "total_downloads": 0,
+            "files": [
+                {
+                    "name": "playable_billie.zip",
+                    "url": "https://gamebanana.com/dl/1279961",
+                    "size": 2570926,
+                    "creation_date": 1726345035,
+                    "downloads": 0
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/66e5f0a8879c6.jpg",
+                "https://images.gamebanana.com/img/ss/mods/66e5f0a8a94a5.jpg"
             ]
         }
     ],
