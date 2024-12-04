@@ -944,14 +944,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 223,
+            "total_downloads": 224,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 149
+                    "downloads": 150
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -1157,14 +1157,14 @@
                 "name": "Skins"
             },
             "modify_date": 1726345393,
-            "total_downloads": 10,
+            "total_downloads": 11,
             "files": [
                 {
                     "name": "playable_billie.zip",
                     "url": "https://gamebanana.com/dl/1279961",
                     "size": 2570926,
                     "creation_date": 1726345035,
-                    "downloads": 10
+                    "downloads": 11
                 }
             ],
             "screenshots": [
