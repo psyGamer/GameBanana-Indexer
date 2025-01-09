@@ -602,14 +602,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1710310282,
-            "total_downloads": 75,
+            "total_downloads": 76,
             "files": [
                 {
                     "name": "infinitedashmod_863ad.zip",
                     "url": "https://gamebanana.com/dl/1154840",
                     "size": 28924,
                     "creation_date": 1710310235,
-                    "downloads": 59
+                    "downloads": 60
                 }
             ],
             "screenshots": [
@@ -944,14 +944,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 264,
+            "total_downloads": 265,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 185
+                    "downloads": 186
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -984,7 +984,7 @@
             "dependencies": {},
             "author": {
                 "name": "RobotGalaxy",
-                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "icon_url": "https://images.gamebanana.com/img/av/677e3f542f427.png",
                 "profile_url": "https://gamebanana.com/members/3340697"
             },
             "category": {
