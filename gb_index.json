@@ -32,7 +32,8 @@
         "523926": 29,
         "523928": 30,
         "495333": 31,
-        "542185": 32
+        "542185": 32,
+        "575386": 33
     },
     "mod_metas": [
         {
@@ -124,14 +125,14 @@
                 "name": "Maps"
             },
             "modify_date": 1708731263,
-            "total_downloads": 109,
+            "total_downloads": 110,
             "files": [
                 {
                     "name": "swkmw_hollowcraft.zip",
                     "url": "https://gamebanana.com/dl/1144752",
                     "size": 58006,
                     "creation_date": 1708731183,
-                    "downloads": 54
+                    "downloads": 55
                 },
                 {
                     "name": "wkmw_modified_by_hollow_craft_v101.zip",
@@ -171,14 +172,14 @@
                 "name": "Maps"
             },
             "modify_date": 1707602850,
-            "total_downloads": 115,
+            "total_downloads": 116,
             "files": [
                 {
                     "name": "dissi_hat_rifts_e5008.zip",
                     "url": "https://gamebanana.com/dl/1137081",
                     "size": 4817158,
                     "creation_date": 1707602840,
-                    "downloads": 73
+                    "downloads": 74
                 }
             ],
             "screenshots": [
@@ -237,14 +238,14 @@
                 "name": "Maps"
             },
             "modify_date": 1707602815,
-            "total_downloads": 34,
+            "total_downloads": 35,
             "files": [
                 {
                     "name": "dissi_interior_b28f1.zip",
                     "url": "https://gamebanana.com/dl/1137080",
                     "size": 12724,
                     "creation_date": 1707602812,
-                    "downloads": 31
+                    "downloads": 32
                 }
             ],
             "screenshots": [
@@ -701,14 +702,14 @@
                 "name": "Maps"
             },
             "modify_date": 1710084559,
-            "total_downloads": 80,
+            "total_downloads": 81,
             "files": [
                 {
                     "name": "c0a0_751fa.zip",
                     "url": "https://gamebanana.com/dl/1153461",
                     "size": 289131,
                     "creation_date": 1710084469,
-                    "downloads": 80
+                    "downloads": 81
                 }
             ],
             "screenshots": [
@@ -944,7 +945,7 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 297,
+            "total_downloads": 298,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
@@ -958,7 +959,7 @@
                     "url": "https://gamebanana.com/dl/1164607",
                     "size": 1367904,
                     "creation_date": 1711706710,
-                    "downloads": 78
+                    "downloads": 79
                 },
                 {
                     "name": "supermario64-v100.zip",
@@ -1170,6 +1171,41 @@
             "screenshots": [
                 "https://images.gamebanana.com/img/ss/mods/66e5f0a8879c6.jpg",
                 "https://images.gamebanana.com/img/ss/mods/66e5f0a8a94a5.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 575386,
+            "mod_id": "Irima_extendedforsakencity",
+            "name": "Extended Forsaken City",
+            "desc": "Discover a entire new map with 15 new strawberries!",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Irima",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/4228732"
+            },
+            "category": {
+                "id": 27586,
+                "name": "Maps"
+            },
+            "modify_date": 1739570475,
+            "total_downloads": 1,
+            "files": [
+                {
+                    "name": "irima_extendedforsakencity.zip",
+                    "url": "https://gamebanana.com/dl/1381909",
+                    "size": 382963,
+                    "creation_date": 1739569856,
+                    "downloads": 1
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/67afb4e3a4bfb.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4e1c6cb2.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4e230882.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4d1ee2be.jpg"
             ]
         }
     ],
