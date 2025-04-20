@@ -33,7 +33,8 @@
         "523928": 30,
         "495333": 31,
         "542185": 32,
-        "575386": 33
+        "575386": 33,
+        "589273": 34
     },
     "mod_metas": [
         {
@@ -535,14 +536,14 @@
                 "name": "Other/Misc"
             },
             "modify_date": 1710310360,
-            "total_downloads": 65,
+            "total_downloads": 66,
             "files": [
                 {
                     "name": "replayablecassettemod_08dd6.zip",
                     "url": "https://gamebanana.com/dl/1154842",
                     "size": 17756,
                     "creation_date": 1710310357,
-                    "downloads": 47
+                    "downloads": 48
                 }
             ],
             "screenshots": [
@@ -635,7 +636,7 @@
                 "id": 27704,
                 "name": "Actors"
             },
-            "modify_date": 1711665116,
+            "modify_date": 1745078623,
             "total_downloads": 40,
             "files": [
                 {
@@ -768,14 +769,14 @@
                 "name": "Other/Misc"
             },
             "modify_date": 1711665336,
-            "total_downloads": 76,
+            "total_downloads": 77,
             "files": [
                 {
                     "name": "discord_rich_presence.zip",
                     "url": "https://gamebanana.com/dl/1164234",
                     "size": 297536,
                     "creation_date": 1711665309,
-                    "downloads": 76
+                    "downloads": 77
                 }
             ],
             "screenshots": [
@@ -801,14 +802,14 @@
                 "name": "Other/Misc"
             },
             "modify_date": 1711897695,
-            "total_downloads": 51,
+            "total_downloads": 52,
             "files": [
                 {
                     "name": "deltarune_explosion_67485.zip",
                     "url": "https://gamebanana.com/dl/1166168",
                     "size": 307994,
                     "creation_date": 1711897687,
-                    "downloads": 31
+                    "downloads": 32
                 }
             ],
             "screenshots": [
@@ -945,14 +946,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 326,
+            "total_downloads": 327,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 232
+                    "downloads": 233
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -1206,6 +1207,39 @@
                 "https://images.gamebanana.com/img/ss/mods/67afb4e1c6cb2.jpg",
                 "https://images.gamebanana.com/img/ss/mods/67afb4e230882.jpg",
                 "https://images.gamebanana.com/img/ss/mods/67afb4d1ee2be.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 589273,
+            "mod_id": "spuds.sidespring",
+            "name": "sideways springs",
+            "desc": "i see why the base game didn't have them this was a pain to code",
+            "version": "1.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "aliteralpotato",
+                "icon_url": "https://images.gamebanana.com/img/av/6111362835ff1.png",
+                "profile_url": "https://gamebanana.com/members/1912715"
+            },
+            "category": {
+                "id": 27699,
+                "name": "Gameplay"
+            },
+            "modify_date": 1745078962,
+            "total_downloads": 1,
+            "files": [
+                {
+                    "name": "sidespring.zip",
+                    "url": "https://gamebanana.com/dl/1423873",
+                    "size": 3976,
+                    "creation_date": 1745078851,
+                    "downloads": 1
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/6803ca8a23592.jpg",
+                "https://images.gamebanana.com/img/ss/mods/6803caab0652b.jpg"
             ]
         }
     ],
