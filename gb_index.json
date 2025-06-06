@@ -55,14 +55,14 @@
                 "name": "Maps"
             },
             "modify_date": 1707602896,
-            "total_downloads": 82,
+            "total_downloads": 83,
             "files": [
                 {
                     "name": "dissi_test_map_bf340.zip",
                     "url": "https://gamebanana.com/dl/1137083",
                     "size": 8502,
                     "creation_date": 1707602894,
-                    "downloads": 57
+                    "downloads": 58
                 }
             ],
             "screenshots": [
@@ -88,14 +88,14 @@
                 "name": "Skins"
             },
             "modify_date": 1708284508,
-            "total_downloads": 88,
+            "total_downloads": 89,
             "files": [
                 {
                     "name": "pridecoatpack_daf24.zip",
                     "url": "https://gamebanana.com/dl/1141184",
                     "size": 2154636,
                     "creation_date": 1708237105,
-                    "downloads": 59
+                    "downloads": 60
                 }
             ],
             "screenshots": [
@@ -117,7 +117,7 @@
             "fuji_required_version": null,
             "dependencies": {},
             "author": {
-                "name": "hollow_craft",
+                "name": "HoIIow",
                 "icon_url": "https://images.gamebanana.com/img/av/65be5e3b88acf.png",
                 "profile_url": "https://gamebanana.com/members/2714573"
             },
@@ -239,14 +239,14 @@
                 "name": "Maps"
             },
             "modify_date": 1707602815,
-            "total_downloads": 38,
+            "total_downloads": 39,
             "files": [
                 {
                     "name": "dissi_interior_b28f1.zip",
                     "url": "https://gamebanana.com/dl/1137080",
                     "size": 12724,
                     "creation_date": 1707602812,
-                    "downloads": 35
+                    "downloads": 36
                 }
             ],
             "screenshots": [
