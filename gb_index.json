@@ -33,8 +33,8 @@
         "523928": 30,
         "495333": 31,
         "542185": 32,
-        "575386": 33,
-        "589273": 34
+        "589273": 33,
+        "575386": 34
     },
     "mod_metas": [
         {
@@ -906,7 +906,7 @@
                 "name": "Maps"
             },
             "modify_date": 1713100579,
-            "total_downloads": 108,
+            "total_downloads": 109,
             "files": [
                 {
                     "name": "wiedo-beesides-v1_1-fuji.zip",
@@ -920,7 +920,7 @@
                     "url": "https://gamebanana.com/dl/1175340",
                     "size": 2166168,
                     "creation_date": 1713099915,
-                    "downloads": 21
+                    "downloads": 22
                 }
             ],
             "screenshots": [
@@ -1175,41 +1175,6 @@
             ]
         },
         {
-            "gamebanana_id": 575386,
-            "mod_id": "Irima_extendedforsakencity",
-            "name": "Extended Forsaken City",
-            "desc": "Discover a entire new map with 15 new strawberries!",
-            "version": "1.0.0",
-            "fuji_required_version": null,
-            "dependencies": {},
-            "author": {
-                "name": "Irima",
-                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
-                "profile_url": "https://gamebanana.com/members/4228732"
-            },
-            "category": {
-                "id": 27586,
-                "name": "Maps"
-            },
-            "modify_date": 1739570475,
-            "total_downloads": 33,
-            "files": [
-                {
-                    "name": "irima_extendedforsakencity.zip",
-                    "url": "https://gamebanana.com/dl/1381909",
-                    "size": 382963,
-                    "creation_date": 1739569856,
-                    "downloads": 34
-                }
-            ],
-            "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/67afb4e3a4bfb.jpg",
-                "https://images.gamebanana.com/img/ss/mods/67afb4e1c6cb2.jpg",
-                "https://images.gamebanana.com/img/ss/mods/67afb4e230882.jpg",
-                "https://images.gamebanana.com/img/ss/mods/67afb4d1ee2be.jpg"
-            ]
-        },
-        {
             "gamebanana_id": 589273,
             "mod_id": "spuds.sidespring",
             "name": "sideways springs",
@@ -1227,19 +1192,61 @@
                 "name": "Gameplay"
             },
             "modify_date": 1745078962,
-            "total_downloads": 7,
+            "total_downloads": 8,
             "files": [
                 {
                     "name": "sidespring.zip",
                     "url": "https://gamebanana.com/dl/1423873",
                     "size": 3976,
                     "creation_date": 1745078851,
-                    "downloads": 7
+                    "downloads": 8
                 }
             ],
             "screenshots": [
                 "https://images.gamebanana.com/img/ss/mods/6803ca8a23592.jpg",
                 "https://images.gamebanana.com/img/ss/mods/6803caab0652b.jpg"
+            ]
+        },
+        {
+            "gamebanana_id": 575386,
+            "mod_id": "Irima_extendedforsakencity",
+            "name": "Extended Forsaken City",
+            "desc": "Discover a entire new map with 15 new strawberries!",
+            "version": "1.0.1",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Irima",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/4228732"
+            },
+            "category": {
+                "id": 27586,
+                "name": "Maps"
+            },
+            "modify_date": 1752352562,
+            "total_downloads": 34,
+            "files": [
+                {
+                    "name": "irima_extendedforsakencity_v101.zip",
+                    "url": "https://gamebanana.com/dl/1476176",
+                    "size": 380061,
+                    "creation_date": 1752352553,
+                    "downloads": 0
+                },
+                {
+                    "name": "irima_extendedforsakencity.zip",
+                    "url": "https://gamebanana.com/dl/1381909",
+                    "size": 382963,
+                    "creation_date": 1739569856,
+                    "downloads": 34
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/67afb4e3a4bfb.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4e1c6cb2.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4e230882.jpg",
+                "https://images.gamebanana.com/img/ss/mods/67afb4d1ee2be.jpg"
             ]
         }
     ],
