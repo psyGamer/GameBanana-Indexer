@@ -637,14 +637,14 @@
                 "name": "Actors"
             },
             "modify_date": 1752401736,
-            "total_downloads": 41,
+            "total_downloads": 42,
             "files": [
                 {
                     "name": "wind_d6f3d.zip",
                     "url": "https://gamebanana.com/dl/1476463",
                     "size": 33737637,
                     "creation_date": 1752401718,
-                    "downloads": 1
+                    "downloads": 2
                 }
             ],
             "screenshots": [
@@ -1225,14 +1225,14 @@
                 "name": "Maps"
             },
             "modify_date": 1752438290,
-            "total_downloads": 36,
+            "total_downloads": 37,
             "files": [
                 {
                     "name": "irima_extendedforsakencity_v101_6e903.zip",
                     "url": "https://gamebanana.com/dl/1476736",
                     "size": 380076,
                     "creation_date": 1752438224,
-                    "downloads": 0
+                    "downloads": 1
                 },
                 {
                     "name": "irima_extendedforsakencity.zip",
