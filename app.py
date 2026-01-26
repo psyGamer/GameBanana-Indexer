@@ -486,7 +486,7 @@ def main():
             log(f"Failed fetching metadata: {ex}")
             invalid_mods.append(idx)
 
-            if idx.modify_date != old_meta.modify_date:
+            if old_meta is None or idx.modify_date != old_meta.modify_date:
                 # TODO: Handle https://gamebanana.com/tools/* URLs
                 embed = DiscordEmbed(title=f"Invalid: **{idx.name}**", description=str(ex), url=f"https://gamebanana.com/mods/{idx.id}", color=WEBHOOK_COLOR_ERROR)
                 embed.set_timestamp(idx.modify_date)
