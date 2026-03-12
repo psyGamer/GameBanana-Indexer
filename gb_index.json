@@ -637,14 +637,14 @@
                 "name": "Actors"
             },
             "modify_date": 1752401736,
-            "total_downloads": 43,
+            "total_downloads": 45,
             "files": [
                 {
                     "name": "wind_d6f3d.zip",
                     "url": "https://gamebanana.com/dl/1476463",
                     "size": 33737637,
                     "creation_date": 1752401718,
-                    "downloads": 3
+                    "downloads": 5
                 }
             ],
             "screenshots": [
@@ -946,7 +946,7 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 392,
+            "total_downloads": 393,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
@@ -960,7 +960,7 @@
                     "url": "https://gamebanana.com/dl/1164607",
                     "size": 1367904,
                     "creation_date": 1711706710,
-                    "downloads": 88
+                    "downloads": 89
                 },
                 {
                     "name": "supermario64-v100.zip",
