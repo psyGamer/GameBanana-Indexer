@@ -946,14 +946,14 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 398,
+            "total_downloads": 399,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
                     "url": "https://gamebanana.com/dl/1176517",
                     "size": 1371015,
                     "creation_date": 1713280018,
-                    "downloads": 288
+                    "downloads": 289
                 },
                 {
                     "name": "supermario64-v110.zip",
@@ -1225,7 +1225,7 @@
                 "name": "Maps"
             },
             "modify_date": 1752438290,
-            "total_downloads": 60,
+            "total_downloads": 61,
             "files": [
                 {
                     "name": "irima_extendedforsakencity_v101_6e903.zip",
@@ -1239,7 +1239,7 @@
                     "url": "https://gamebanana.com/dl/1381909",
                     "size": 382963,
                     "creation_date": 1739569856,
-                    "downloads": 36
+                    "downloads": 37
                 }
             ],
             "screenshots": [
