@@ -371,14 +371,14 @@
                 "name": "Asset Replacement"
             },
             "modify_date": 1707451468,
-            "total_downloads": 82,
+            "total_downloads": 83,
             "files": [
                 {
                     "name": "blahajberry.zip",
                     "url": "https://gamebanana.com/dl/1136095",
                     "size": 18588,
                     "creation_date": 1707451443,
-                    "downloads": 82
+                    "downloads": 83
                 }
             ],
             "screenshots": [
@@ -906,21 +906,21 @@
                 "name": "Maps"
             },
             "modify_date": 1713100579,
-            "total_downloads": 142,
+            "total_downloads": 144,
             "files": [
                 {
                     "name": "wiedo-beesides-v1_1-fuji.zip",
                     "url": "https://gamebanana.com/dl/1175339",
                     "size": 2165744,
                     "creation_date": 1713099911,
-                    "downloads": 109
+                    "downloads": 110
                 },
                 {
                     "name": "wiedo-beesides-v1_1.zip",
                     "url": "https://gamebanana.com/dl/1175340",
                     "size": 2166168,
                     "creation_date": 1713099915,
-                    "downloads": 33
+                    "downloads": 34
                 }
             ],
             "screenshots": [
