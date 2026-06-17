@@ -37,39 +37,7 @@
         "575386": 34
     },
     "mod_metas": [
-        {
-            "gamebanana_id": 493499,
-            "mod_id": "Dissi_test_map",
-            "name": "Testing map",
-            "desc": "simple test map, nothing special",
-            "version": "0.0.0",
-            "fuji_required_version": null,
-            "dependencies": {},
-            "author": {
-                "name": "Dissi de nd",
-                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
-                "profile_url": "https://gamebanana.com/members/3172632"
-            },
-            "category": {
-                "id": 27586,
-                "name": "Maps"
-            },
-            "modify_date": 1707602896,
-            "total_downloads": 95,
-            "files": [
-                {
-                    "name": "dissi_test_map_bf340.zip",
-                    "url": "https://gamebanana.com/dl/1137083",
-                    "size": 8502,
-                    "creation_date": 1707602894,
-                    "downloads": 70
-                }
-            ],
-            "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/65bd235b9a591.jpg",
-                "https://images.gamebanana.com/img/ss/mods/65bd235b97a46.jpg"
-            ]
-        },
+        null,
         {
             "gamebanana_id": 493503,
             "mod_id": "JazzrabbitPrideCoatsMod",
