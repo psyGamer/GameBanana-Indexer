@@ -3,41 +3,73 @@
         "493499": 0,
         "493503": 1,
         "493663": 2,
-        "493734": 3,
-        "493858": 4,
-        "493912": 5,
-        "494054": 6,
-        "494691": 7,
-        "494697": 8,
-        "494728": 9,
-        "494742": 10,
-        "495069": 11,
-        "495232": 12,
-        "495245": 13,
-        "496493": 14,
-        "496501": 15,
-        "496509": 16,
-        "496691": 17,
-        "495402": 18,
-        "500168": 19,
-        "501350": 20,
-        "503591": 21,
-        "503593": 22,
-        "504009": 23,
-        "505079": 24,
-        "507290": 25,
-        "502397": 26,
-        "515141": 27,
-        "493504": 28,
-        "523926": 29,
-        "523928": 30,
-        "495333": 31,
-        "542185": 32,
-        "589273": 33,
-        "575386": 34
+        "493734": 2,
+        "493858": 2,
+        "493912": 3,
+        "494054": 1,
+        "494691": 2,
+        "494697": 3,
+        "494728": 4,
+        "494742": 5,
+        "495069": 6,
+        "495232": 7,
+        "495245": 8,
+        "496493": 1,
+        "496501": 2,
+        "496509": 3,
+        "496691": 4,
+        "495402": 5,
+        "500168": 6,
+        "501350": 7,
+        "503591": 8,
+        "503593": 9,
+        "504009": 10,
+        "505079": 11,
+        "507290": 12,
+        "502397": 13,
+        "515141": 14,
+        "493504": 15,
+        "523926": 16,
+        "523928": 17,
+        "495333": 18,
+        "542185": 19,
+        "589273": 20,
+        "575386": 21
     },
     "mod_metas": [
-        null,
+        {
+            "gamebanana_id": 493499,
+            "mod_id": "Dissi_test_map",
+            "name": "Testing map",
+            "desc": "simple test map, nothing special",
+            "version": "0.0.0",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "Dissi de nd",
+                "icon_url": "https://images.gamebanana.com/static/img/defaults/avatar.gif",
+                "profile_url": "https://gamebanana.com/members/3172632"
+            },
+            "category": {
+                "id": 27586,
+                "name": "Maps"
+            },
+            "modify_date": 1707602896,
+            "total_downloads": 95,
+            "files": [
+                {
+                    "name": "dissi_test_map_bf340.zip",
+                    "url": "https://gamebanana.com/dl/1137083",
+                    "size": 8502,
+                    "creation_date": 1707602894,
+                    "downloads": 70
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/65bd235b9a591.jpg",
+                "https://images.gamebanana.com/img/ss/mods/65bd235b97a46.jpg"
+            ]
+        },
         {
             "gamebanana_id": 493503,
             "mod_id": "JazzrabbitPrideCoatsMod",
@@ -1254,7 +1286,7 @@
             "name": "64 Mario",
             "author": {
                 "name": "Peachy_Pie",
-                "icon_url": "https://images.gamebanana.com/img/av/6513bf54cc8f6.png",
+                "icon_url": "https://images.gamebanana.com/img/av/679d6f252f2b2.jpg",
                 "profile_url": "https://gamebanana.com/members/1569371"
             },
             "modify_date": 1707032540,
@@ -1326,7 +1358,7 @@
             "name": "Broken Heavy",
             "author": {
                 "name": "Racckoon",
-                "icon_url": "https://images.gamebanana.com/img/av/61a3626a16c19.png",
+                "icon_url": "https://images.gamebanana.com/img/av/677c558621b33.png",
                 "profile_url": "https://gamebanana.com/members/1852756"
             },
             "modify_date": 1708028468,
@@ -1345,7 +1377,9 @@
             },
             "modify_date": 1769340076,
             "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/6975fa25682c5.jpg"
+                "https://images.gamebanana.com/img/ss/mods/6975fa25682c5.jpg",
+                "https://images.gamebanana.com/img/ss/mods/6975fa25734ba.jpg",
+                "https://images.gamebanana.com/img/ss/mods/6975fa25d96b6.jpg"
             ]
         },
         {
