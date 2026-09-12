@@ -305,14 +305,14 @@
                 "name": "Actors"
             },
             "modify_date": 1707441849,
-            "total_downloads": 60,
+            "total_downloads": 61,
             "files": [
                 {
                     "name": "wingedberry.zip",
                     "url": "https://gamebanana.com/dl/1135983",
                     "size": 141025,
                     "creation_date": 1707439553,
-                    "downloads": 60
+                    "downloads": 61
                 }
             ],
             "screenshots": [
@@ -946,7 +946,7 @@
                 "name": "Gameplay"
             },
             "modify_date": 1728139795,
-            "total_downloads": 428,
+            "total_downloads": 430,
             "files": [
                 {
                     "name": "supermario64-v120.zip",
@@ -967,7 +967,7 @@
                     "url": "https://gamebanana.com/dl/1160359",
                     "size": 1900737,
                     "creation_date": 1711130861,
-                    "downloads": 25
+                    "downloads": 27
                 }
             ],
             "screenshots": [
