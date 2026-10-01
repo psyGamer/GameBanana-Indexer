@@ -254,39 +254,7 @@
                 "https://images.gamebanana.com/img/ss/mods/65bfd154052ba.jpg"
             ]
         },
-        {
-            "gamebanana_id": 494054,
-            "mod_id": "spuds.kevin",
-            "name": "kevin",
-            "desc": "adds kevin from celeste as a placeable actor in your levels",
-            "version": "1.0.1",
-            "fuji_required_version": null,
-            "dependencies": {},
-            "author": {
-                "name": "aliteralpotato",
-                "icon_url": "https://images.gamebanana.com/img/av/6111362835ff1.png",
-                "profile_url": "https://gamebanana.com/members/1912715"
-            },
-            "category": {
-                "id": 27704,
-                "name": "Actors"
-            },
-            "modify_date": 1711665087,
-            "total_downloads": 48,
-            "files": [
-                {
-                    "name": "kevin_4bd55.zip",
-                    "url": "https://gamebanana.com/dl/1164228",
-                    "size": 4250,
-                    "creation_date": 1711665081,
-                    "downloads": 41
-                }
-            ],
-            "screenshots": [
-                "https://images.gamebanana.com/img/ss/mods/65c09498a30ec.jpg",
-                "https://images.gamebanana.com/img/ss/mods/65c0940779f2c.jpg"
-            ]
-        },
+        null,
         {
             "gamebanana_id": 494691,
             "mod_id": "WingedBerry",
