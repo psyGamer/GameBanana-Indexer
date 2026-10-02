@@ -3,38 +3,38 @@
         "493499": 0,
         "493503": 1,
         "493663": 2,
-        "493734": 3,
-        "493858": 4,
-        "493912": 5,
-        "494054": 6,
-        "494691": 7,
-        "494697": 8,
-        "494728": 9,
-        "494742": 10,
-        "495069": 11,
-        "495232": 12,
-        "495245": 13,
-        "496493": 14,
-        "496501": 15,
-        "496509": 16,
-        "496691": 17,
-        "495402": 18,
-        "500168": 19,
-        "501350": 20,
-        "503591": 21,
-        "503593": 22,
-        "504009": 23,
-        "505079": 24,
-        "507290": 25,
-        "502397": 26,
-        "515141": 27,
-        "493504": 28,
-        "523926": 29,
-        "523928": 30,
-        "495333": 31,
-        "542185": 32,
-        "589273": 33,
-        "575386": 34
+        "493734": 2,
+        "493858": 2,
+        "493912": 3,
+        "494054": 1,
+        "494691": 2,
+        "494697": 3,
+        "494728": 4,
+        "494742": 5,
+        "495069": 6,
+        "495232": 7,
+        "495245": 8,
+        "496493": 1,
+        "496501": 2,
+        "496509": 3,
+        "496691": 4,
+        "495402": 5,
+        "500168": 6,
+        "501350": 7,
+        "503591": 8,
+        "503593": 9,
+        "504009": 10,
+        "505079": 11,
+        "507290": 12,
+        "502397": 13,
+        "515141": 14,
+        "493504": 15,
+        "523926": 16,
+        "523928": 17,
+        "495333": 18,
+        "542185": 19,
+        "589273": 20,
+        "575386": 21
     },
     "mod_metas": [
         {
@@ -254,7 +254,39 @@
                 "https://images.gamebanana.com/img/ss/mods/65bfd154052ba.jpg"
             ]
         },
-        null,
+        {
+            "gamebanana_id": 494054,
+            "mod_id": "spuds.kevin",
+            "name": "kevin",
+            "desc": "adds kevin from celeste as a placeable actor in your levels",
+            "version": "1.0.1",
+            "fuji_required_version": null,
+            "dependencies": {},
+            "author": {
+                "name": "aliteralpotato",
+                "icon_url": "https://images.gamebanana.com/img/av/6111362835ff1.png",
+                "profile_url": "https://gamebanana.com/members/1912715"
+            },
+            "category": {
+                "id": 27704,
+                "name": "Actors"
+            },
+            "modify_date": 1711665087,
+            "total_downloads": 48,
+            "files": [
+                {
+                    "name": "kevin_4bd55.zip",
+                    "url": "https://gamebanana.com/dl/1164228",
+                    "size": 4250,
+                    "creation_date": 1711665081,
+                    "downloads": 41
+                }
+            ],
+            "screenshots": [
+                "https://images.gamebanana.com/img/ss/mods/65c09498a30ec.jpg",
+                "https://images.gamebanana.com/img/ss/mods/65c0940779f2c.jpg"
+            ]
+        },
         {
             "gamebanana_id": 494691,
             "mod_id": "WingedBerry",
@@ -1253,7 +1285,7 @@
             "id": 493823,
             "name": "64 Mario",
             "author": {
-                "name": "Peachy_Pie",
+                "name": "SillyBandzDS",
                 "icon_url": "https://images.gamebanana.com/img/av/679d6f252f2b2.jpg",
                 "profile_url": "https://gamebanana.com/members/1569371"
             },
